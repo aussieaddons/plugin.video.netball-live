@@ -1,12 +1,12 @@
 #Netball Live addon for Kodi
 
-## This add-on supports the free Live Pass offer from eligible Telstra customers. In-app subscriptions through the App Store/Google Play are NOT supported.
+## This add-on supports the free Live Pass offer for eligible Telstra customers. In-app subscriptions through the App Store/Google Play are NOT supported.
 
 ##Requirements
 
-Kodi v17 is the minimum recommended version. If you are having SSL errors, upgrading should solve them. On some platforms earlier version will work fine.
+Kodi v17 is the minimum recommended version. If you are having SSL errors, upgrading Kodi should solve them. On some platforms earlier versions will work fine.
 
-You will need a Telstra ID account with an eligble service attached to use this add-on. Most Telstra Mobile customers are eligble for a free subscription with their plan. Please see their [website](https://www.telstra.com.au/tv-movies-music/sports-offer) for details.
+You will need a Telstra ID account with an eligible service attached to use this add-on. Most Telstra Mobile customers are eligible for a free subscription with their plan. Please see their [website](https://www.telstra.com.au/tv-movies-music/sports-offer) for details.
 
 ##How to install
 
