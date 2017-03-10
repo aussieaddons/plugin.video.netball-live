@@ -42,7 +42,6 @@ import play
 import matches
 import utils
 import categories
-from f4mproxy.F4mProxy import f4mProxyHelper
 
 _url = sys.argv[0]
 _handle = int(sys.argv[1])
@@ -58,7 +57,6 @@ def router(paramstring):
     :param paramstring:
     """
     params = dict(parse_qsl(paramstring))
-    utils.log(params)
     if params:
         if params['action'] == 'listcategories':
             if params['category'] == 'livematches':
@@ -69,6 +67,8 @@ def router(paramstring):
                 matches.make_matches_list(params)
         elif params['action'] == 'listmatches':
             play.play_video(params)
+        elif params['action'] == 'clearticket':
+            ooyalahelper.clear_ticket()
     else:
         categories.list_categories()
 

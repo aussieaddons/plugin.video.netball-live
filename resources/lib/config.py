@@ -25,15 +25,8 @@ ISSUE_API_URL = GITHUB_API_URL + '/issues'
 ISSUE_API_AUTH = 'eGJtY2JvdDo1OTQxNTJjMTBhZGFiNGRlN2M0YWZkZDYwZGQ5NDFkNWY4YmIzOGFj'
 GIST_API_URL = 'https://api.github.com/gists'
 
-
-# Bitrates for Adobe HDS streams - 0 is max (2400)
-HDS_REPLAY_QUALITY =   {'0': 168,
-                        '1': 236,
-                        '2': 400,
-                        '3': 700,
-                        '4': 1100,
-                        '5': 1800,
-                        '6': 0}
+MAX_LIVEQUAL = 5
+MAX_REPLAYQUAL = 7
 
 # XML template to insert username and password into
 LOGIN_DATA ='<Subscriber><Type>TDI</Type><User>{0}</User><Password>{1}</Password><Email>{0}</Email><AdobeCheckResult>0</AdobeCheckResult></Subscriber>'
@@ -42,7 +35,7 @@ LOGIN_DATA ='<Subscriber><Type>TDI</Type><User>{0}</User><Password>{1}</Password
 EMBED_TOKEN_URL ='https://signon-league-net.yinzcam.com/subscription/videotoken?application=NET_LEAGUE&ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&embed_code={0}&ycurl_version=1&os=Android'
 
 # url used to request playlist
-AUTH_URL = 'http://player.ooyala.com/sas/player_api/v1/authorization/embed_code/{0}/{1}?device=android_html&domain=http%3A%2F%2Fwww.ooyala.com&embedToken={2}&supportedFormats=m3u8%2Cmp4'
+AUTH_URL = 'http://player.ooyala.com/sas/player_api/v2/authorization/embed_code/{0}/{1}?device=html5&domain=http%3A%2F%2Fwww.ooyala.com&embedToken={2}&supportedFormats=m3u8'
 
 # main url for xml that contains metadata for all match replays and other non-live videos            
 XML_URL = 'http://app-league-net.yinzcam.com/V1/media/taggedlist/media-type/V?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'

@@ -38,8 +38,13 @@ from exception import NetballLiveException
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from requests.packages.urllib3.poolmanager import PoolManager
-import platform
 
+try:
+   import StorageServer
+except:
+    utils.log("script.common.plugin.cache not found!")
+    import storageserverdummy as StorageServer
+cache = StorageServer.StorageServer(config.ADDON_ID, 1)
 
 # Ignore InsecureRequestWarning warnings
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
@@ -50,33 +55,20 @@ addon = xbmcaddon.Addon()
 username = addon.getSetting('LIVE_USERNAME')
 password = addon.getSetting('LIVE_PASSWORD')
 
+def clear_ticket():
+    """Remove stored ticket from cache storage"""
+    cache.delete('NETBALLTICKET')
     
-def get_user_token():
-    """send user login info and retrieve user id for session"""
-    
-    stored_ticket = addon.getSetting('TICKET')
+def get_user_ticket():
+    """send user login info and retrieve ticket for session"""
+    stored_ticket = cache.get('NETBALLTICKET')
     if stored_ticket != '':
+        utils.log('Using ticket: {0}******'.format(stored_ticket[:-6]))
         return stored_ticket
     
     ticket = telstra_auth.get_free_token(username, password)
-    addon.setSetting('TICKET', ticket)
+    cache.set('NETBALLTICKET', ticket)
     return ticket
-
-def fetch_hds_smil(video_id):
-    """ contact ooyala server and retrieve smil data to be decoded"""
-    url = config.SMIL_URL.format(video_id)
-    utils.log("Fetching URL: {0}".format(url))
-    res = session.get(url)
-    return res.text
-
-def get_hds_url(encrypted_smil):
-    """ decrypt smil data and return HDS url from the xml data"""
-    from ooyala import ooyalaCrypto
-    decrypt = ooyalaCrypto.ooyalaCrypto()
-    smil_xml = decrypt.ooyalaDecrypt(encrypted_smil)
-    tree = ET.fromstring(smil_xml)
-    return tree.find('content').find('video').find('httpDynamicStreamUrl').text
-
 
 def get_embed_token(user_token, video_id):
     """send our user token to get our embed token, including api key"""
@@ -88,9 +80,12 @@ def get_embed_token(user_token, video_id):
         req = session.get(url, verify=False)
         data = req.text
         json_data = json.loads(data)
+        if json_data.get('ErrorCode') is not None:
+            raise NetballLiveException()
         video_token = json_data.get('VideoToken')
-    except:
-        addon.setSetting('TICKET', '')
+    except NetballLiveException:
+        utils.log('Error getting embed token. Response: {0}'.format(req.text))
+        cache.delete('NETBALLTICKET')
         raise Exception
     return urllib.quote(video_token)
 
@@ -100,9 +95,13 @@ def get_secure_token(secure_url, videoId):
     """send our embed token back with a few other url encoded parameters"""
     res = session.get(secure_url)
     data = res.text
-    parsed_json = json.loads(data)
-    iosToken =  parsed_json['authorization_data'][videoId]['streams'][0]['url']['data']
-    return base64.b64decode(iosToken)
+    try:
+        parsed_json = json.loads(data)
+        token =  parsed_json['authorization_data'][videoId]['streams'][0]['url']['data']
+    except KeyError as e:
+        utils.log('Parsed json data: {0}'.format(parsed_json))
+        raise e
+    return base64.b64decode(token)
 
 def get_m3u8_streams(secure_token_url):
     """ fetch our m3u8 file which contains streams of various qualities"""
@@ -117,14 +116,13 @@ def parse_m3u8_streams(data, live, secure_token_url):
         the destination filename and not the domain/path."""
     if live:
         qual = int(addon.getSetting('LIVEQUALITY'))
-        if qual >= 6:
-            addon.setSetting('LIVEQUALITY', '5')
-            qual = 5
+        if qual == config.MAX_LIVEQUAL:
+            qual = -1
     else:
-        qual = int(addon.getSetting('HLSQUALITY'))
-        if qual >= 6:
-            addon.setSetting('HLSQUALITY', '5')
-            qual = 5
+        qual = int(addon.getSetting('REPLAYQUALITY'))
+        if qual == config.MAX_REPLAYQUAL:
+            qual = -1
+
     if '#EXT-X-VERSION:3' in data:
         data.remove('#EXT-X-VERSION:3')
     count = 1
@@ -163,7 +161,7 @@ def get_m3u8_playlist(video_id, live):
     """ Main function to call other functions that will return us our m3u8 HLS
         playlist as a string, which we can then write to a file for Kodi
         to use"""
-    login_token = get_user_token()
+    login_token = get_user_ticket()
     embed_token = get_embed_token(login_token, video_id)
     authorize_url = config.AUTH_URL.format(config.PCODE, video_id, embed_token)
     secure_token_url = get_secure_token(authorize_url, video_id)
