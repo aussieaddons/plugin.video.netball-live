@@ -13,6 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Netball Live.  If not, see <http://www.gnu.org/licenses/>.
+# flake8: noqa
 
 import version
 
@@ -37,9 +38,12 @@ EMBED_TOKEN_URL ='https://signon-league-net.yinzcam.com/subscription/videotoken?
 # url used to request playlist
 AUTH_URL = 'http://player.ooyala.com/sas/player_api/v2/authorization/embed_code/{0}/{1}?device=html5&domain=http%3A%2F%2Fwww.ooyala.com&embedToken={2}&supportedFormats=m3u8'
 
-# main url for xml that contains metadata for all match replays and other non-live videos            
+# main url for xml that contains metadata for other non-live videos            
 XML_URL = 'http://app-league-net.yinzcam.com/V1/media/taggedlist/media-type/V?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
-            
+
+# xml for replay videos
+REPLAY_URL = 'http://app-league-net.yinzcam.com/V1/Media/TaggedList/card/matchreplays?ff=mobile&mnc=0&app_version=2.2.5&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'          
+
 # url for xml that contains match scores
 SCORE_URL = 'http://app-league-net.yinzcam.com/V1/Game/Scores/?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
 

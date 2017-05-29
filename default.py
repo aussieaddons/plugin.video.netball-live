@@ -16,32 +16,20 @@
 
 import os
 import sys
-import time
-import datetime
-
 import xbmc
 import xbmcgui
 import xbmcaddon
-import xbmcplugin
-
-import urllib
-import urllib2
 from urlparse import parse_qsl
-import xml.etree.ElementTree as ET
-import cookielib
 
 addon = xbmcaddon.Addon()
 cwd = xbmc.translatePath(addon.getAddonInfo('path')).decode("utf-8")
 BASE_RESOURCE_PATH = os.path.join(cwd, 'resources', 'lib')
 sys.path.append(BASE_RESOURCE_PATH)
 
-import config
-import ooyalahelper
-import classes
-import play
-import matches
-import utils
-import categories
+import ooyalahelper  # noqa: E402
+import play  # noqa: E402
+import matches  # noqa: E402
+import categories  # noqa: E402
 
 _url = sys.argv[0]
 _handle = int(sys.argv[1])
@@ -72,13 +60,13 @@ def router(paramstring):
     else:
         categories.list_categories()
 
+
 if __name__ == '__main__':
     if addon.getSetting('firstrun') == 'true':
         xbmcgui.Dialog().ok(addonname, ('Please enter your Netball Live '
-                                    'Pass (Telstra ID) username '),(
-                                    ' and password to access the content in'
-                                    ' this service.'))
+                                        'Pass (Telstra ID) username and '
+                                        'password to access the content '
+                                        'in this service.'))
         addon.openSettings()
         addon.setSetting('firstrun', 'false')
     router(sys.argv[2][1:])
-

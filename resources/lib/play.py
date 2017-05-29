@@ -18,19 +18,19 @@ import xbmcaddon
 import xbmcgui
 import xbmcplugin
 import sys
-import config
 import ooyalahelper
 import utils
 
 addon = xbmcaddon.Addon()
 _handle = int(sys.argv[1])
 
+
 def play_video(params):
     """
     Play a video by the provided path.
     :param path: str
     """
-  
+
     if params['dummy'] == 'True':
         return
     try:
