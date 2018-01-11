@@ -1,24 +1,34 @@
-# Copyright 2017 Glenn Guy
-# This file is part of Netball Live Kodi Addon
-#
-# Netball Live is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# NRL Live is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Netball Live.  If not, see <http://www.gnu.org/licenses/>.
-
-import xml.etree.ElementTree as ET
 import classes
-import urllib2
-import utils
 import config
+import datetime
+import time
+import xml.etree.ElementTree as ET
+
+from aussieaddonscommon import utils
+from aussieaddonscommon import session
+
+
+def get_airtime(timestamp):
+    try:
+        delta = ((time.mktime(time.localtime()) -
+                 time.mktime(time.gmtime())) / 3600)
+        if time.localtime().tm_isdst:
+            delta += 1
+        ts = datetime.datetime.fromtimestamp(
+            time.mktime(time.strptime(timestamp[:-1], "%Y-%m-%dT%H:%M:%S")))
+        ts += datetime.timedelta(hours=delta)
+        return ts.strftime("%A %d %b @ %I:%M %p").replace(' 0', ' ')
+    except OverflowError:
+        return ''
+
+
+def fetch_url(url):
+    """
+    HTTP GET on url, remove byte order mark
+    """
+    with session.Session() as sess:
+        resp = sess.get(url)
+        return resp.text.encode("utf-8")
 
 
 def list_matches(params, live=False):
@@ -32,9 +42,7 @@ def list_matches(params, live=False):
         url = config.REPLAY_URL
     else:
         url = config.XML_URL
-    utils.log("Fetching URL: {0}".format(url))
-    response = urllib2.urlopen(url)
-    data = response.read()
+    data = fetch_url(url)
     tree = ET.fromstring(data)
     listing = []
     for elem in tree.findall("MediaSection"):
@@ -89,10 +97,8 @@ def get_media_tree(video_id):
     """
     get xml with info about live match
     """
-    url = config.LIVE_MEDIA_URL.format(video_id)
-    utils.log("Fetching URL: {0}".format(url))
-    response = urllib2.urlopen(url)
-    tree = ET.fromstring(response.read())
+    data = fetch_url(config.LIVE_MEDIA_URL.format(video_id))
+    tree = ET.fromstring(data)
     return tree.find('Item')
 
 
@@ -101,9 +107,8 @@ def get_index():
     get index of current round's games so we can find the 'box' URL
     and make a list of game ids,
     """
-    utils.log("Fetching URL: {0}".format(config.INDEX_URL))
-    response = urllib2.urlopen(config.INDEX_URL)
-    tree = ET.fromstring(response.read())
+    data = fetch_url(config.INDEX_URL)
+    tree = ET.fromstring(data)
     listing = []
     for elem in tree.find('HeadlineGames'):
         listing.append(elem.attrib['Id'])
@@ -117,10 +122,8 @@ def find_live_matches():
     id_list = get_index()
     listing = []
     for game_id in id_list:
-        url = config.BOX_URL.format(game_id)
-        utils.log("Fetching URL: {0}".format(url))
-        response = urllib2.urlopen(url)
-        tree = ET.fromstring(response.read())
+        data = fetch_url(config.BOX_URL.format(game_id))
+        tree = ET.fromstring(data)
         watch_button = tree.find('WatchButton')
         if watch_button:
             if watch_button.find('Title').text != 'WATCH REPLAY':
@@ -133,9 +136,8 @@ def get_upcoming():
     similar to get_score but this time we are searching for upcoming live
     match info
     """
-    utils.log("Fetching URL: {0}".format(config.SCORE_URL))
-    response = urllib2.urlopen(config.SCORE_URL)
-    tree = ET.fromstring(response.read())
+    data = fetch_url(config.SCORE_URL)
+    tree = ET.fromstring(data)
     listing = []
 
     for elem in tree.findall("Day"):
@@ -147,7 +149,7 @@ def get_upcoming():
             away = subelem.find('AwayTeam').attrib['FullName']
             timestamp = subelem.find('Timestamp').text
             # convert zulu to local time
-            airtime = utils.get_airtime(timestamp)
+            airtime = get_airtime(timestamp)
             title = ('[COLOR red]Upcoming:[/COLOR] '
                      '{0} v {1} - [COLOR yellow]{2}[/COLOR]')
             g.title = title.format(home, away, airtime)
@@ -160,9 +162,8 @@ def get_score(match_id):
     """
     fetch score xml and return the scores for corresponding match IDs
     """
-    utils.log("Fetching URL: {0}".format(config.SCORE_URL))
-    response = urllib2.urlopen(config.SCORE_URL)
-    tree = ET.fromstring(response.read())
+    data = fetch_url(config.SCORE_URL)
+    tree = ET.fromstring(data)
 
     for elem in tree.findall("Day"):
         for subelem in elem.findall("Game"):

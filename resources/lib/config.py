@@ -1,25 +1,7 @@
-# Copyright 2017 Glenn Guy
-# This file is part of Netball Live Kodi Addon
-#
-# Netball Live is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# NRL Live is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Netball Live.  If not, see <http://www.gnu.org/licenses/>.
 # flake8: noqa
-
-import version
 
 NAME = 'Netball Live'
 ADDON_ID = 'plugin.video.netball-live'
-VERSION = version.VERSION
 
 GITHUB_API_URL = 'https://api.github.com/repos/glennguy/plugin.video.netball-live'
 ISSUE_API_URL = GITHUB_API_URL + '/issues'
@@ -60,27 +42,14 @@ LIVE_MEDIA_URL = 'http://app-league-net.yinzcam.com/V1/Media/Video/{0}?ff=mobile
 SMIL_URL = "http://player.ooyala.com/nuplayer?embedCode={0}"
 
 # ooyala provider indentifier code used in contructing request uris            
-PCODE = 'BudDUxOt2GEh8L5PMMpcbz1wJFwm'
-
-YEARS = ['2013', '2014', '2015', '2016', '2017']
+PCODE = 'BudDUxOt2GEh8L5PMMpcbz1wJFwm'          
 
 CATEGORIES = {'1 Live Matches': 'livematches',
-                '2 Full Match Replays': 'MatchReplays',
-                '3 Match Highlights': 'MatchHighlights',
-                '4 News': 'News',
-                '5 Other Videos': 'Others',
-                '6 Settings': 'settings'}
-
-COMPS = {'1 Telstra Premiership': '1',
-            '2 State of Origin' : '30',
-            '3 Auckland Nines'  : '20',
-            '4 All Stars'       : '51',
-            '5 World Club Series': '42',
-            '6 International Tests': '40',
-            '7 Country v City'  : '50',
-            '8 State or Origin U20': '31',
-            '9 Four Nations'    : '41'}
-            
+              '2 Full Match Replays': 'MatchReplays',
+              '3 Match Highlights': 'MatchHighlights',
+              '4 News': 'News',
+              '5 Other Videos': 'Others',
+              '6 Settings': 'settings'}
 
 # New auth config for 2017
 

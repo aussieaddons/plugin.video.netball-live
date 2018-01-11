@@ -1,28 +1,13 @@
-# Copyright 2017 Glenn Guy
-# This file is part of Netball Live Kodi Addon
-#
-# Netball Live is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# NRL Live is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with Netball Live.  If not, see <http://www.gnu.org/licenses/>.
-
 import urllib
-import custom_session
 import json
 import base64
 import config
-import utils
 import xbmcaddon
 import telstra_auth
-from exception import NetballLiveException
+
+from aussieaddonscommon.exceptions import AussieAddonsException
+from aussieaddonscommon import session
+from aussieaddonscommon import utils
 
 try:
     import StorageServer
@@ -30,7 +15,7 @@ except:
     utils.log("script.common.plugin.cache not found!")
     import storageserverdummy as StorageServer
 cache = StorageServer.StorageServer(config.ADDON_ID, 1)
-session = custom_session.Session(force_tlsv1=True)
+sess = session.Session(force_tlsv1=True)
 addon = xbmcaddon.Addon()
 username = addon.getSetting('LIVE_USERNAME')
 password = addon.getSetting('LIVE_PASSWORD')
@@ -62,16 +47,16 @@ def get_embed_token(user_token, video_id):
     send our user token to get our embed token, including api key
     """
     url = config.EMBED_TOKEN_URL.format(video_id)
-    session.headers.update({'X-YinzCam-Ticket': user_token,
-                            'Accept': 'application/json'})
+    sess.headers.update({'X-YinzCam-Ticket': user_token,
+                         'Accept': 'application/json'})
     try:
-        req = session.get(url)
+        req = sess.get(url)
         data = req.text
         json_data = json.loads(data)
         if json_data.get('ErrorCode') is not None:
-            raise NetballLiveException()
+            raise AussieAddonsException()
         video_token = json_data.get('VideoToken')
-    except NetballLiveException:
+    except AussieAddonsException:
         utils.log('Error getting embed token. Response: {0}'.format(req.text))
         cache.delete('NETBALLTICKET')
         raise Exception
@@ -82,7 +67,7 @@ def get_secure_token(secure_url, videoId):
     """
     send our embed token back with a few other url encoded parameters
     """
-    res = session.get(secure_url)
+    res = sess.get(secure_url)
     data = res.text
     try:
         parsed_json = json.loads(data)
@@ -94,10 +79,12 @@ def get_secure_token(secure_url, videoId):
             auth_msg = parsed_json['authorization_data'][videoId]['message']
             if auth_msg == 'unauthorized location':
                 country = parsed_json['user_info']['country']
-                raise Exception('Unauthorised location for streaming. '
-                                'Detected location is: {0}. '
-                                'Please check VPN/smart DNS settings '
-                                ' and try again'.format(country))
+                raise AussieAddonsException('Unauthorised location for '
+                                            'streaming. '
+                                            'Detected location is: {0}. '
+                                            'Please check VPN/smart DNS '
+                                            'settings '
+                                            ' and try again'.format(country))
         except Exception as e:
             raise e
     return base64.b64decode(token)
@@ -107,7 +94,7 @@ def get_m3u8_streams(secure_token_url):
     """
     fetch our m3u8 file which contains streams of various qualities
     """
-    res = session.get(secure_token_url)
+    res = sess.get(secure_token_url)
     data = res.text.splitlines()
     return data
 

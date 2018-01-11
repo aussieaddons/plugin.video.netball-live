@@ -1,4 +1,4 @@
-[B]Version 1.1.0[/B]
+[B]Version v1.1.0[/B]
 - List all replays, small fixes, flake8
 - Version 1.0.0
 - Version 1.0.0
