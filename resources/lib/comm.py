@@ -37,7 +37,6 @@ def list_matches(params, live=False):
     """
     if live:
         return list_live_matches()
-    print params['category']
     if params['category'] == 'MatchReplays':
         url = config.REPLAY_URL
     else:

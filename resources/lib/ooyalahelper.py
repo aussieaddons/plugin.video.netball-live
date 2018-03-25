@@ -2,6 +2,7 @@ import urllib
 import json
 import base64
 import config
+import requests
 import xbmcaddon
 import telstra_auth
 
@@ -26,6 +27,7 @@ def clear_ticket():
     Remove stored ticket from cache storage
     """
     cache.delete('NETBALLTICKET')
+    utils.dialog_message('Login token removed')
 
 
 def get_user_ticket():
@@ -56,10 +58,15 @@ def get_embed_token(user_token, video_id):
         if json_data.get('ErrorCode') is not None:
             raise AussieAddonsException()
         video_token = json_data.get('VideoToken')
-    except AussieAddonsException:
-        utils.log('Error getting embed token. Response: {0}'.format(req.text))
+    except requests.exceptions.HTTPError as e:
+        utils.log('Error getting embed token. '
+                  'Response: {0}'.format(e.response.text))
         cache.delete('NETBALLTICKET')
-        raise Exception
+        if e.response.status_code == 401:
+            raise AussieAddonsException('Login token has expired, '
+                                        'please try again.')
+        else:
+            raise e
     return urllib.quote(video_token)
 
 
