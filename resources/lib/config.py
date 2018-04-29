@@ -8,7 +8,7 @@ ISSUE_API_URL = GITHUB_API_URL + '/issues'
 ISSUE_API_AUTH = 'eGJtY2JvdDo1OTQxNTJjMTBhZGFiNGRlN2M0YWZkZDYwZGQ5NDFkNWY4YmIzOGFj'
 GIST_API_URL = 'https://api.github.com/gists'
 
-MAX_LIVEQUAL = 5
+MAX_LIVEQUAL = 4
 MAX_REPLAYQUAL = 7
 
 # XML template to insert username and password into
@@ -21,22 +21,22 @@ EMBED_TOKEN_URL ='https://signon-league-net.yinzcam.com/subscription/videotoken?
 AUTH_URL = 'http://player.ooyala.com/sas/player_api/v2/authorization/embed_code/{0}/{1}?device=html5&domain=http%3A%2F%2Fwww.ooyala.com&embedToken={2}&supportedFormats=m3u8'
 
 # main url for xml that contains metadata for other non-live videos            
-XML_URL = 'http://app-league-net.yinzcam.com/V1/media/taggedlist/media-type/V?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
+XML_URL = 'http://app-league-net.yinzcam.com/V1/media/taggedlist/media-type/V?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.4.0&mode=SUPER_NETBALL&version=5.7&width=1080&os_version=7.1.2&mcc=0&application=NET_LEAGUE'
 
 # xml for replay videos
-REPLAY_URL = 'http://app-league-net.yinzcam.com/V1/Media/TaggedList/card/matchreplays?ff=mobile&mnc=0&app_version=2.2.5&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'          
+REPLAY_URL = 'http://app-league-net.yinzcam.com/V1/Media/TaggedList/card/matchreplays?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.4.0&mode=SUPER_NETBALL&version=5.7&width=1080&os_version=7.1.2&mcc=0&application=NET_LEAGUE'          
 
 # url for xml that contains match scores
-SCORE_URL = 'http://app-league-net.yinzcam.com/V1/Game/Scores/?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
+SCORE_URL = 'http://app-league-net.yinzcam.com/V1/Game/Scores/?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.4.0&mode=SUPER_NETBALL&version=5.7&width=1080&os_version=7.1.2&mcc=0&application=NET_LEAGUE'
 
 # index of android app homepage - has current round game id's
-INDEX_URL = 'http://app-league-net.yinzcam.com/V1/Home/Index?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
+INDEX_URL = 'http://app-league-net.yinzcam.com/V1/Home/Index?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.4.0&mode=SUPER_NETBALL&version=5.7&width=1080&os_version=7.1.2&mcc=0&application=NET_LEAGUE'
 
 # Score and team names for upcoming games
-BOX_URL = 'http://app-league-net.yinzcam.com/V1/Game/Box/{0}?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
+BOX_URL = 'http://app-league-net.yinzcam.com/V1/Game/Box/{0}?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.4.0&mode=SUPER_NETBALL&version=5.7&width=1080&os_version=7.1.2&mcc=0&application=NET_LEAGUE'
 
 # used to get metadata for playing live matches
-LIVE_MEDIA_URL = 'http://app-league-net.yinzcam.com/V1/Media/Video/{0}?ff=mobile&mnc=0&app_version=2.1.3&carrier=&version=5.6&width=1080&height=1776&os_version=6.0&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
+LIVE_MEDIA_URL = 'http://app-league-net.yinzcam.com/V1/Media/Video/{0}?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.4.0&mode=SUPER_NETBALL&version=5.7&width=1080&os_version=7.1.2&mcc=0&application=NET_LEAGUE'
 
 # used for HDS metadata retrieval
 SMIL_URL = "http://player.ooyala.com/nuplayer?embedCode={0}"
