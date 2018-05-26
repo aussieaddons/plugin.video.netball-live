@@ -1,8 +1,9 @@
+import binascii
 import config
 import json
+import os
 import re
 import requests
-import urllib
 import urlparse
 import uuid
 import xbmcgui
@@ -10,8 +11,6 @@ import xbmcgui
 from aussieaddonscommon.exceptions import AussieAddonsException
 from aussieaddonscommon import session as custom_session
 from aussieaddonscommon import utils
-
-from bs4 import BeautifulSoup
 
 
 class TelstraAuthException(AussieAddonsException):
@@ -29,36 +28,66 @@ def get_free_token(username, password):
     requests for Ooyala embed tokens
     """
     session = custom_session.Session(force_tlsv1=True)
-
     prog_dialog = xbmcgui.DialogProgress()
     prog_dialog.create('Logging in with Telstra ID')
-    prog_dialog.update(1, 'Obtaining user token')
 
-    # Send our first login request to Yinzcam, recieve (unactivated) token
-    # and 'msisdn' URL
+    # Send our first login request to Yinzcam, recieve (unactivated) ticket
+    prog_dialog.update(1, 'Obtaining user ticket')
+    adid = uuid.uuid4()
+    deviceid = uuid.uuid4()
     session.headers = config.YINZCAM_AUTH_HEADERS
-    data = config.NEW_LOGIN_DATA1.format(uuid.uuid4())
-    ticket_resp = session.post(config.YINZCAM_AUTH_URL, data=data)
-    ticket = json.loads(ticket_resp.text).get('Ticket')
+    ticket_resp = session.post(config.YINZCAM_AUTH_URL,
+                               data=config.NEW_LOGIN_DATA1.format(
+                                adid=adid, deviceid=deviceid))
+    ticket_json = json.loads(ticket_resp.text)
+    ticket = ticket_json.get('Ticket')
     session.headers = {}
     session.headers.update({'X-YinzCam-Ticket': ticket})
+
+    # Send ticket back and get 'sports pass confirmation' URL and 'TpUid'
     yinz_resp = session.get(config.YINZCAM_AUTH_URL2)
     jsondata = json.loads(yinz_resp.text)
     token = jsondata.get('TpUid')
-    if not token:
-        raise TelstraAuthException('Unable to get token from Netball API')
-    msisdn_url = jsondata.get('Url')
-    msisdn_url = msisdn_url.replace('?tpUID', '.html?device=mobile&tpUID')
-    prog_dialog.update(20, 'Signing on to telstra.com')
+    spc_url = jsondata.get('Url')
+    if not token or not spc_url:
+        raise TelstraAuthException('Unable to get token/spc url from Netball '
+                                   'API')
 
-    # Sign in to telstra.com to recieve cookies, get the SAML auth, and
-    # modify the escape characters so we can send it back later
-    session.headers = config.SIGNON_HEADERS
+    prog_dialog.update(16, 'Getting SSO Client ID')
+    # GET to our spc url and receive SSO client ID
+    session.headers = config.SPC_HEADERS
+    spc_resp = session.get(spc_url)
+    sso_token_match = re.search('ssoClientId = "(\w+)"', spc_resp.text)
+    try:
+        sso_token = sso_token_match.group(1)
+    except AttributeError as e:
+        utils.log('SPC login response: {0}'.format(spc_resp.text))
+        raise e
+
+    # Sign in to telstra.com with our SSO client id to get the url
+    # for retrieving the bearer token for media orders
+    prog_dialog.update(33, 'Signing on to telstra.com')
+    sso_params = config.SSO_PARAMS
+    sso_params.update({'client_id': sso_token,
+                       'state': binascii.b2a_hex(os.urandom(16)),
+                       'nonce': binascii.b2a_hex(os.urandom(16))})
+
+    sso_auth_resp = session.get(config.SSO_URL, params=sso_params)
+    sso_url = dict(urlparse.parse_qsl(
+                   urlparse.urlsplit(sso_auth_resp.url)[3])).get('goto')
+
+    # login to telstra.com.au and get our BPSESSION cookie
+    session.headers.update(config.SIGNON_HEADERS)
     signon_data = config.SIGNON_DATA
-    signon_data.update({'username': username, 'password': password})
-    signon = session.post(config.SIGNON_URL, data=signon_data)
+    signon_data = {'username': username, 'password': password, 'goto': sso_url}
+    signon = session.post(config.SIGNON_URL,
+                          data=signon_data,
+                          allow_redirects=False)
+    bp_session = session.cookies.get_dict().get('BPSESSION')
 
-    signon_pieces = urlparse.urlsplit(signon.url)
+    # check signon is valid (correct username/password)
+
+    signon_pieces = urlparse.urlsplit(signon.headers.get('Location'))
     signon_query = dict(urlparse.parse_qsl(signon_pieces.query))
 
     utils.log('Sign-on result: %s' % signon_query)
@@ -74,36 +103,28 @@ def get_free_token(username, password):
             raise TelstraAuthException('Please enter your username and '
                                        'password in the settings')
         if signon_query['errorcode'] == '3':
-            raise TelstraAuthException('Please check your username and '
+            raise TelstraAuthException('Invalid Telstra ID username/password. '
+                                       'Please check your username and '
                                        'password in the settings')
-    soup = BeautifulSoup(signon.text, 'html.parser')
-    saml_base64 = soup.find(attrs={'name': 'SAMLResponse'}).get('value')
-    prog_dialog.update(40, 'Obtaining API token')
 
-    # Send the SAML login data and retrieve the auth token from the response
-    session.headers = {}
-    session.headers = config.SAML_LOGIN_HEADERS
-    session.cookies.set('saml_request_path', msisdn_url)
-    saml_data = 'SAMLResponse=' + urllib.quote(saml_base64)
-    utils.log('Fetching stream auth token: {0}'.format(config.SAML_LOGIN_URL))
-    saml_login = session.post(config.SAML_LOGIN_URL, data=saml_data)
-    confirm_url = saml_login.url
-    auth_token_match = re.search('apiToken = "(\w+)"', saml_login.text)
-    auth_token = auth_token_match.group(1)
-    prog_dialog.update(60, 'Determining eligible services')
+    # Use BPSESSION cookie to ask for bearer token
+    sso_headers = config.SSO_HEADERS
+    sso_headers.update({'Cookie': 'BPSESSION={0}'.format(bp_session)})
+    session.headers = sso_headers
+    sso_token_resp = session.get(sso_url)
+    bearer_token = dict(urlparse.parse_qsl(
+                    urlparse.urlsplit(sso_token_resp.url)[4]))['access_token']
 
-    # 'Order' the subscription package to activate our token/login
+    # First check if there are any eligible services attached to the account
+    prog_dialog.update(50, 'Determining eligible services')
     offer_id = dict(urlparse.parse_qsl(
-                    urlparse.urlsplit(msisdn_url)[3]))['offerId']
+                    urlparse.urlsplit(spc_url)[3]))['offerId']
     media_order_headers = config.MEDIA_ORDER_HEADERS
     media_order_headers.update(
-        {'Authorization': 'Bearer {0}'.format(auth_token),
-         'Referer': confirm_url})
+        {'Authorization': 'Bearer {0}'.format(bearer_token)})
     session.headers = media_order_headers
-    # First check if there are any eligible services attached to the account
-    offers = session.get(config.OFFERS_URL)
     try:
-        offers.raise_for_status()
+        offers = session.get(config.OFFERS_URL)
     except requests.exceptions.HTTPError as e:
         if e.response.status_code == 404:
             message = json.loads(e.response.text).get('userMessage')
@@ -116,16 +137,26 @@ def get_free_token(username, password):
     try:
         offer_data = json.loads(offers.text)
         offers_list = offer_data['data']['offers']
+        ph_no = None
         for offer in offers_list:
             if offer.get('name') != 'Netball Live Pass':
                 continue
             data = offer.get('productOfferingAttributes')
             ph_no = [x['value'] for x in data if x['name'] == 'ServiceId'][0]
-    except:
-        raise TelstraAuthException('Unable to determine eligible services')
-    prog_dialog.update(80, 'Obtaining Live Pass')
+        if not ph_no:
+            raise TelstraAuthException(
+                'Unable to determine if you have any eligible services. '
+                'Please ensure there is an eligible service linked to '
+                'your Telstra ID to redeem the free offer. Please visit '
+                '{0} for further instructions'.format(config.HUB_URL))
+    except Exception as e:
+        raise e
+
+    # 'Order' the subscription package to activate the service
+    prog_dialog.update(66, 'Activating live pass on service')
     order_data = config.MEDIA_ORDER_JSON.format(ph_no, offer_id, token)
     order = session.post(config.MEDIA_ORDER_URL, data=order_data)
+
     # check to make sure order has been placed correctly
     if order.status_code == 201:
         try:
@@ -135,6 +166,24 @@ def get_free_token(username, password):
                 utils.log('Order status complete')
         except:
             utils.log('Unable to check status of order, continuing anyway')
+
+    # Register the ticket
+    prog_dialog.update(83, 'Registering live pass with ticket')
+    session.headers = {'Accept': 'application/json',
+                       'Accept-Encoding': 'gzip',
+                       'Connection': 'Keep-Alive',
+                       'User-Agent': 'okhttp/3.4.1',
+                       'X-YinzCam-AppID': 'NET_LEAGUE',
+                       'X-YinzCam-Ticket': ticket}
+    session.get(config.YINZ_CALLBACK_URL.format(token), allow_redirects=False)
+
+    # Confirm everything has gone well
+    prog_dialog.update(100, 'Checking status of Live Pass')
+    sub_status = session.get(config.STATUS_URL)
+    status_json = json.loads(sub_status.text)
+    if status_json.get('Valid') != 'true':
+        raise AussieAddonsException('Telstra ID activation failed: {0}'.format(
+            status_json.get('Reason')))
 
     session.close()
     prog_dialog.update(100, 'Finished!')

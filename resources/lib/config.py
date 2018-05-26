@@ -52,9 +52,13 @@ CATEGORIES = {'1 Live Matches': 'livematches',
 
 # New auth config for 2017
 
-NEW_LOGIN_DATA1 = '<TicketRequest><Anonymous><VendorId>6a7db518-b912-4060-b08b-a733544fc9ef</VendorId><AppId>NET_LEAGUE</AppId><InstallId>{0}</InstallId></Anonymous></TicketRequest>'
+USER_AGENT_LONG = 'Mozilla/5.0 (Linux; Android 6.0; HTC One_M8 Build/MRA58K.H15; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36'
+
+NEW_LOGIN_DATA1 = '<TicketRequest><Anonymous><AppId>NET_LEAGUE</AppId><VendorId>{adid}</VendorId><InstallId>{deviceid}</InstallId></Anonymous></TicketRequest>'
 
 NEW_LOGIN_DATA2 = '<Subscriber><Type>TOKEN</Type><User>{0}</User></Subscriber>'
+
+STATUS_URL = 'https://signon-league-net.yinzcam.com/subscription/status?application=NET_LEAGUE'
 
 YINZCAM_AUTH_URL = 'https://signon-league-net.yinzcam.com/ticket?mnc=0&ff=mobile&app_version=2.1.3&carrier=&version=5.6&height=1776&width=1080&mcc=0&application=NET_LEAGUE&ycurl_version=1&os=Android'
 
@@ -91,7 +95,7 @@ SAML_LOGIN_HEADERS = {'Host': 'hub.telstra.com.au',
                       'Cache-Control': 'max-age=0', 
                       'Origin': 'https://signon.telstra.com', 
                       'Upgrade-Insecure-Requests': '1', 
-                      'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; HTC One_M8 Build/MRA58K.H15; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36', 
+                      'User-Agent': USER_AGENT_LONG, 
                       'Content-Type': 'application/x-www-form-urlencoded', 
                       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 
                       'Referer': 'https://signon.telstra.com/federation/saml2?SPID=telstramedia', 
@@ -103,12 +107,36 @@ OFFERS_URL = 'https://api.telstra.com/v1/media-products/catalogues/media/offers?
 
 HUB_URL = 'http://hub.telstra.com.au/sp2017-netball-app'
 
+SSO_URL = 'https://api.telstra.com/v1/sso/auth'
+
+SSO_PARAMS = {'redirect_uri': 'https://hub.telstra.com.au/offers/content/cached/callback.html',
+              'response_type': 'id_token token',
+              'scope': 'openid email profile phone telstra.user.sso.profile'}
+              
+SSO_HEADERS = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+               'Accept-Encoding': 'gzip, '
+                                  'deflate',
+               'Accept-Language': 'en-AU,en-US;q=0.9',
+               'Cache-Control': 'max-age=0',
+               'Connection': 'keep-alive',
+               'Referer': 'https://signon.telstra.com.au/login?goto=https%3A%2F%2Fapi.telstra.com%2Fv1%2Fsso%2Fidpcallback%3Fcbs%3DeyJhbGciOiJIUzI1NiJ9.eyJjYWxsYmFja19zdGF0ZSI6IjEyMjcyMDQ3LWU3N2ItNGRiZC1hNGZiLTBlYTcwMDMyYmRlMSIsImF1ZCI6InJhYSIsImV4cCI6MTUyMDczNTMyMTk0OCwiaWF0IjoxNTIwNjQ4OTIxOTQ4fQ.-I05HQE9eIpRS0LLSYB_pJ4iVKZZzyziVYarvjCe_2o%26app_name%3DOne%20Place%20portal',
+               'Upgrade-Insecure-Requests': '1',
+               'User-Agent': USER_AGENT_LONG,
+               'X-Requested-With': 'au.com.netball'}
+
+SPC_HEADERS = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+               'Accept-Encoding': 'gzip, '
+                                  'deflate',
+               'Accept-Language': 'en-AU,en-US;q=0.9',
+               'User-Agent': USER_AGENT_LONG,
+               'X-Requested-With': 'au.com.netball'}
+
 MEDIA_ORDER_HEADERS = {'Content-Type': 'application/json', 
                        'Accept': 'application/json, text/plain, */*', 
                        'Host': 'api.telstra.com', 
                        'Connection': 'keep-alive', 
                        'Origin': 'https://hub.telstra.com.au',
-                       'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; HTC One_M8 Build/MRA58K.H15; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36', 
+                       'User-Agent': USER_AGENT_LONG, 
                        'Accept-Encoding': 'gzip, deflate', 
                        'Accept-Language': 'en-AU,en-US;q=0.8', 
                        'X-Requested-With': 'au.com.netball'}
@@ -116,3 +144,5 @@ MEDIA_ORDER_HEADERS = {'Content-Type': 'application/json',
 MEDIA_ORDER_URL = 'https://api.telstra.com/v1/media-commerce/orders'
 
 MEDIA_ORDER_JSON = '{{"serviceId":"{0}","serviceType":"MSISDN","offer":{{"id":"{1}"}},"pai":"{2}"}}'
+
+YINZ_CALLBACK_URL = 'https://signon-league-net.yinzcam.com/telstra/oneplace/callback/NET_LEAGUE?type=SportPassConfirmation&statusCode=200&tpUID={0}'
