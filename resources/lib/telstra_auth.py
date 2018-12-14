@@ -27,7 +27,7 @@ def get_free_token(username, password):
     Obtain a valid token from Telstra/Yinzcam, will be used to make
     requests for Ooyala embed tokens
     """
-    session = custom_session.Session(force_tlsv1=True)
+    session = custom_session.Session(force_tlsv1=False)
     prog_dialog = xbmcgui.DialogProgress()
     prog_dialog.create('Logging in with Telstra ID')
 
@@ -78,7 +78,6 @@ def get_free_token(username, password):
 
     # login to telstra.com.au and get our BPSESSION cookie
     session.headers.update(config.SIGNON_HEADERS)
-    signon_data = config.SIGNON_DATA
     signon_data = {'username': username, 'password': password, 'goto': sso_url}
     signon = session.post(config.SIGNON_URL,
                           data=signon_data,
