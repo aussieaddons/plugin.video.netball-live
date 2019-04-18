@@ -66,10 +66,8 @@ YINZCAM_AUTH_URL2 = 'https://signon-league-net.yinzcam.com/telstra/oneplace/url?
 
 YINZCAM_AUTH_HEADERS = {'Content-Type': 'application/xml', 
                         'Accept': 'application/json', 
-                        'Connection': 'close', 
-                        'Content-Length': 'placeholder', 
+                        'Connection': 'close',  
                         'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 6.0; HTC One_M8 Build/MRA58K.H15)', 
-                        'Host': 'signon-league-net.yinzcam.com', 
                         'Accept-Encoding': 'gzip'}
 
 SIGNON_HEADERS = {'Connection': 'keep-alive', 

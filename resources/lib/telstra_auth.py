@@ -42,7 +42,8 @@ def get_free_token(username, password):
     ticket_json = json.loads(ticket_resp.text)
     ticket = ticket_json.get('Ticket')
     session.headers = {}
-    session.headers.update({'X-YinzCam-Ticket': ticket})
+    session.headers.update({'X-YinzCam-Ticket': ticket,
+                            'Accept': 'application/json'})
 
     # Send ticket back and get 'sports pass confirmation' URL and 'TpUid'
     yinz_resp = session.get(config.YINZCAM_AUTH_URL2)
