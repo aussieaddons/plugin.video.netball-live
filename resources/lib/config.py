@@ -70,37 +70,54 @@ YINZCAM_AUTH_HEADERS = {'Content-Type': 'application/xml',
                         'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 6.0; HTC One_M8 Build/MRA58K.H15)', 
                         'Accept-Encoding': 'gzip'}
 
-SIGNON_HEADERS = {'Connection': 'keep-alive', 
-                  'Cache-Control': 'max-age=0', 
-                  'Origin': 'https://signon.telstra.com', 
-                  'Upgrade-Insecure-Requests': '1', 
-                  'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; HTC One_M8 Build/MRA58K.H15; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/56.0.2924.87 Mobile Safari/537.36', 
-                  'Content-Type': 'application/x-www-form-urlencoded', 
-                  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8', 
-                  'Referer': 'https://signon.telstra.com/login?goto=https%3A%2F%2Fsignon.telstra.com%2Ffederation%2Fsaml2%3FSPID%3Dtelstramedia&gotoNoTok=', 
-                  'Accept-Encoding': 'gzip, deflate', 
-                  'Accept-Language': 'en-AU,en-US;q=0.8'}
-                        
 SIGNON_URL = 'https://signon.telstra.com/login'
                         
 OFFERS_URL = 'https://tapi.telstra.com/v1/media-products/catalogues/media/offers'
 
 HUB_URL = 'http://hub.telstra.com.au/sp2017-netball-app'
 
-SSO_URL = 'https://tapi.telstra.com/v1/sso/auth'
+MYID_AUTHORIZATION_URL = 'https://myid.telstra.com/identity/as/authorization.oauth2'
 
-SSO_PARAMS = {'redirect_uri': 'https://hub.telstra.com.au/offers/content/cached/callback.html',
-              'response_type': 'id_token token',
-              'scope': 'openid email profile phone telstra.user.sso.profile'}
-              
-SSO_HEADERS = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-               'Accept-Encoding': 'gzip, deflate',
-               'Accept-Language': 'en-AU,en-US;q=0.9',
-               'Cache-Control': 'max-age=0',
-               'Connection': 'keep-alive',
-               'Upgrade-Insecure-Requests': '1',
-               'User-Agent': USER_AGENT_LONG,
-               'X-Requested-With': 'au.com.netball'}
+MYID_TOKEN_URL = 'https://myid.telstra.com/identity/as/token.oauth2'
+
+MYID_TOKEN_PARAMS = {
+    'redirect_uri': 'https://hub.telstra.com.au/offers/content/cached'
+                    '/callback.html',
+    'grant_type': 'authorization_code'
+}
+
+MYID_RESUME_AUTHORIZATION_URL = 'https://myid.telstra.com/identity/as/{0}/resume/as/authorization.ping'
+
+MYID_AUTH_RESUME_DATA = {
+    'pf.rememberUsername': 'on',
+    'pf.ok': 'clicked',
+    'pf.cancel': '',
+    'pf.adapterId': 'upAdapter'
+}
+
+SSO_SESSION_HANDLER_URLS = [
+    'https://signon.telstra.com/SSOSessionHandler',
+    'https://signon.bigpond.com/SSOSessionHandler',
+    'https://signon.telstra.com.au/SSOSessionHandler'
+]
+
+MYID_AUTH_PARAMS = {
+    'redirect_uri': 'https://hub.telstra.com.au/offers/content/cached'
+                    '/callback.html',
+    'response_type': 'code',
+    'scope': 'openid app.oneplace',
+    'code_challenge_method': 'S256',
+    'response_mode': 'query'}
+
+MYID_HEADERS = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,'
+              'image/webp,image/apng,*/*;q=0.8',
+    'Accept-Encoding': 'gzip, '
+                       'deflate',
+    'Accept-Language': 'en-AU,en-US;q=0.9',
+    'Cache-Control': 'max-age=0',
+    'Connection': 'keep-alive',
+    'X-Requested-With': 'au.com.netball'}
 
 SPC_HEADERS = {'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
                'Accept-Encoding': 'gzip, deflate',

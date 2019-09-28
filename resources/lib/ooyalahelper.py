@@ -40,7 +40,8 @@ def get_user_ticket():
         utils.log('Using ticket: {0}******'.format(stored_ticket[:-6]))
         return stored_ticket
     else:
-        ticket = telstra_auth.get_free_token(username, password)
+        auth = telstra_auth.TelstraAuth(username, password)
+        ticket = auth.get_free_token()
     cache.set('NETBALLTICKET', ticket)
     return ticket
 
