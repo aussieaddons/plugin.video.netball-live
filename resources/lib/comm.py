@@ -135,25 +135,27 @@ def get_upcoming():
     similar to get_score but this time we are searching for upcoming live
     match info
     """
-    data = fetch_url(config.SCORE_URL)
-    tree = ET.fromstring(data)
     listing = []
 
-    for elem in tree.findall("Day"):
-        for subelem in elem.findall("Game"):
-            if subelem.find('GameState').text == 'Full Time':
-                continue
-            g = classes.game()
-            home = subelem.find('HomeTeam').attrib['FullName']
-            away = subelem.find('AwayTeam').attrib['FullName']
-            timestamp = subelem.find('Timestamp').text
-            # convert zulu to local time
-            airtime = get_airtime(timestamp)
-            title = ('[COLOR red]Upcoming:[/COLOR] '
-                     '{0} v {1} - [COLOR yellow]{2}[/COLOR]')
-            g.title = title.format(home, away, airtime)
-            g.dummy = True
-            listing.append(g)
+    for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
+        data = fetch_url(config.SCORE_URL.format(mode=mode))
+        tree = ET.fromstring(data)
+
+        for elem in tree.findall("Day"):
+            for subelem in elem.findall("Game"):
+                if subelem.find('GameState').text == 'Full Time':
+                    continue
+                g = classes.game()
+                home = subelem.find('HomeTeam').attrib['FullName']
+                away = subelem.find('AwayTeam').attrib['FullName']
+                timestamp = subelem.find('Timestamp').text
+                # convert zulu to local time
+                airtime = get_airtime(timestamp)
+                title = ('[COLOR red]Upcoming:[/COLOR] '
+                         '{0} v {1} - [COLOR yellow]{2}[/COLOR]')
+                g.title = title.format(home, away, airtime)
+                g.dummy = True
+                listing.append(g)
     return listing
 
 
