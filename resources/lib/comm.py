@@ -1,6 +1,7 @@
 import classes
 import config
 import datetime
+import json
 import time
 import xml.etree.ElementTree as ET
 
@@ -22,25 +23,28 @@ def get_airtime(timestamp):
         return ''
 
 
-def fetch_url(url):
+def fetch_url(url, headers=None):
     """
     HTTP GET on url, remove byte order mark
     """
     with session.Session() as sess:
+        if headers:
+            sess.headers.update(headers)
         resp = sess.get(url)
         return resp.text.encode("utf-8")
 
 
-def list_matches(params, live=False):
+def list_matches(params):
     """
     go through our xml file and retrive all we need to pass to kodi
     """
-    if live:
+    category = params['category']
+    if category == 'livematches':
         return list_live_matches()
-    if params['category'] == 'MatchReplays':
-        url = config.REPLAY_URL
+    if category == 'MatchReplays':
+        url = config.TAGGEDLIST_REPLAY_URL
     else:
-        url = config.XML_URL
+        url = config.TAGGEDLIST_PROGRAM_URL.format(category)
     data = fetch_url(url)
     tree = ET.fromstring(data)
     listing = []
@@ -54,18 +58,20 @@ def list_matches(params, live=False):
                 key = metadata.attrib['Key']
                 if key == 'contentType':
                     content_type = metadata.attrib['Value']
-            if content_type != params['category']:
+            if content_type != category:
                 continue
 
-            g = classes.game()
-            g.title = gm.find('Title').text.encode('ascii', 'replace')
-            if gm.find('Description') is not None:
-                g.desc = gm.find('Description').text.encode('ascii', 'replace')
-            g.video_id = gm.find('Video').attrib['Id']
-            g.live = gm.find('LiveNow').text
-            g.thumb = gm.find('FullImageUrl').text
-            g.time = utils.ensure_ascii(gm.find('Date').text)
-            listing.append(g)
+            v = classes.Video()
+            v.title = gm.find('Title').text.encode('ascii', 'replace')
+            #if gm.find('Description') is not None:
+            #    v.desc = gm.find('Description').text.encode('ascii', 'replace')
+            v.video_id = gm.find('Video').attrib['Id']
+            v.account_id = gm.find('Video').attrib['AccountId']
+            v.policy_key = gm.find('Video').attrib['PolicyKey']
+            v.live = gm.find('LiveNow').text
+            v.thumb = gm.find('FullImageUrl').text
+            v.time = utils.ensure_ascii(gm.find('Date').text)
+            listing.append(v)
     return listing
 
 
@@ -76,19 +82,19 @@ def list_live_matches():
     tree_list = find_live_matches()
     listing = []
     for tree in tree_list:
-        g = classes.game()
+        v = classes.Video()
         home = tree.find('HomeTeam').attrib['FullName']
         away = tree.find('AwayTeam').attrib['FullName']
         match_id = tree.find('Id').text
         score = get_score(match_id)
         title = '[COLOR green][LIVE NOW][/COLOR] {0} v {1} {2}'
-        g.title = title.format(home, away, score)
+        v.title = title.format(home, away, score)
         media_url = tree.find('WatchButton').find('URL').text
         video_id = media_url[media_url.find('Id=')+3:]
         media_tree = get_media_tree(video_id)
-        g.video_id = media_tree.find('Video').attrib['Id']
-        g.live = 'true'
-        listing.append(g)
+        v.video_id = media_tree.find('Video').attrib['Id']
+        v.live = 'true'
+        listing.append(v)
     return listing
 
 
@@ -145,7 +151,7 @@ def get_upcoming():
             for subelem in elem.findall("Game"):
                 if subelem.find('GameState').text == 'Full Time':
                     continue
-                g = classes.game()
+                v = classes.Video()
                 home = subelem.find('HomeTeam').attrib['FullName']
                 away = subelem.find('AwayTeam').attrib['FullName']
                 timestamp = subelem.find('Timestamp').text
@@ -153,9 +159,9 @@ def get_upcoming():
                 airtime = get_airtime(timestamp)
                 title = ('[COLOR red]Upcoming:[/COLOR] '
                          '{0} v {1} - [COLOR yellow]{2}[/COLOR]')
-                g.title = title.format(home, away, airtime)
-                g.dummy = True
-                listing.append(g)
+                v.title = title.format(home, away, airtime)
+                v.dummy = True
+                listing.append(v)
     return listing
 
 
@@ -163,13 +169,34 @@ def get_score(match_id):
     """
     fetch score xml and return the scores for corresponding match IDs
     """
-    data = fetch_url(config.SCORE_URL)
-    tree = ET.fromstring(data)
+    for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
+        data = fetch_url(config.SCORE_URL.format(mode=mode))
+        tree = ET.fromstring(data)
 
-    for elem in tree.findall("Day"):
-        for subelem in elem.findall("Game"):
-            if subelem.attrib['Id'] == str(match_id):
-                home_score = str(subelem.find('HomeTeam').attrib['Score'])
-                away_score = str(subelem.find('AwayTeam').attrib['Score'])
-                return '[COLOR yellow]{0} - {1}[/COLOR]'.format(
-                    home_score, away_score)
+        for elem in tree.findall("Day"):
+            for subelem in elem.findall("Game"):
+                if subelem.attrib['Id'] == str(match_id):
+                    home_score = str(subelem.find('HomeTeam').attrib['Score'])
+                    away_score = str(subelem.find('AwayTeam').attrib['Score'])
+                    return '[COLOR yellow]{0} - {1}[/COLOR]'.format(
+                        home_score, away_score)
+
+def get_stream_url(params):
+    bc_url = config.BC_URL.format(params.get('account_id'),
+                                  params.get('video_id'))
+    data = json.loads(fetch_url(bc_url, {'BCOV-POLICY': params.get('policy_key')}))
+    src = None
+    sources = data.get('sources')
+    if len(sources) == 1:
+        src = sources[0].get('src')
+    else:
+        for source in sources:
+            ext_ver = source.get('ext_x_version')
+            src = source.get('src')
+            if ext_ver == '4' and src:
+                if src.startswith('https'):
+                    break
+    if not src:
+        utils.log(data.get('sources'))
+        raise Exception('Unable to locate video source.')
+    return str(src)

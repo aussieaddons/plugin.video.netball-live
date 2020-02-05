@@ -58,7 +58,6 @@ class TelstraAuth(object):
                                             adid=adid, deviceid=deviceid))
         ticket_json = json.loads(ticket_resp.text)
         self.ticket = ticket_json.get('Ticket')
-        #self.ticket = ticket_xml.find('Ticket').text
         self.session.headers = {'Accept': 'application/json, text/plain, */*'}
         self.session.headers.update({'X-YinzCam-Ticket': self.ticket})
 

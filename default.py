@@ -31,9 +31,7 @@ def router(paramstring):
     params = dict(parse_qsl(paramstring))
     if params:
         if params['action'] == 'listcategories':
-            if params['category'] == 'livematches':
-                matches.make_matches_list(params, live=True)
-            elif params['category'] == 'settings':
+            if params['category'] == 'settings':
                 addon.openSettings()
             else:
                 matches.make_matches_list(params)
