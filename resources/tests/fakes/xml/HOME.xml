@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Home>
+  <State>P</State>
+  <CardTabs Default="CARDS" IconType="T">
+    <List Title="FEATURED" Default="true" Path="/card/IndexSUPER_NETBALL">CARDS</List>
+    <List Title="LATEST">M</List>
+    <List Title="TWITTER" Path="SUPER_NETBALL">T</List>
+  </CardTabs>
+  <HeadlineGames>
+    <Game Id="111080101" Default="true" />
+    <Game Id="111080102" />
+    <Game Id="111080103" />
+    <Game Id="111080104" />
+  </HeadlineGames>
+  <HeadlineItems>
+    <Item Type="BoxScore" Id="111080101" Default="true" />
+    <Item Type="BoxScore" Id="111080102" />
+    <Item Type="BoxScore" Id="111080103" />
+    <Item Type="BoxScore" Id="111080104" />
+  </HeadlineItems>
+  <YinzNode InVenue="false" VenueStatus="O" Ads="YC" InHomeMarket="U" Generated="2/3/2020 11:00:00 AM" />
+</Home>

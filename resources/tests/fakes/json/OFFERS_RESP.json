@@ -1,0 +1,76 @@
+{
+    "correlationId": "",
+    "data": {
+        "offers": [
+            {
+                "bonusEndDateTime": "2021-01-31T23:59:59.000+1100",
+                "bonusPeriod": 0,
+                "carrierBillableOffer": true,
+                "channelTags": [
+                    "All_v1Apps_All_3248",
+                    "TTV_OneApp_HomeScreen_7677",
+                    "All_MyOffersPortal_Offerpage_4368",
+                    "All_MyTelstra_Summary_6859"
+                ],
+                "contractTerm": 0,
+                "externalId": "NA",
+                "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                "name": "Netball Live Pass",
+                "oneOffCharge": 0,
+                "productOfferingAttributes": [
+                    {
+                        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                        "name": "OfferType",
+                        "value": "base"
+                    },
+                    {
+                        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                        "name": "carrierBillable",
+                        "value": "true"
+                    },
+                    {
+                        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                        "name": "ServiceType",
+                        "value": "MSISDN"
+                    },
+                    {
+                        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                        "name": "ServiceId",
+                        "value": "61400000000"
+                    }
+                ],
+                "productOffers": [
+                    {
+                        "contractTerm": 1,
+                        "externalId": "NA",
+                        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                        "name": "Netball Live Pass Streaming",
+                        "oneOffCharge": 0,
+                        "product": {
+                            "category": "Sport",
+                            "description": "Netball Streaming",
+                            "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                            "partner": {
+                                "description": "Netball Australia",
+                                "id": "netball",
+                                "name": "Netball",
+                                "website": "https://netball.com.au/"
+                            },
+                            "productName": "netball_streaming",
+                            "productUrl": "https://netball.com.au/"
+                        },
+                        "recurringCharge": 0,
+                        "requiredPaiPattern": ".*",
+                        "url": "http://media.telstra.com.au/netball.html"
+                    }
+                ],
+                "publishEndDate": "2021-01-31T23:59:59.999+1100",
+                "publishStartDate": "2017-01-31T00:00:00.000+1100",
+                "recurringCharge": 0,
+                "reuptakeAllowed": true,
+                "serviceTransferAllowed": false,
+                "totalPrice": 0
+            }
+        ]
+    }
+}

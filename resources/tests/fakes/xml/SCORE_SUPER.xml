@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scores>
+  <Filters>
+    <Filter QueryParameter="compId" Type="Arrow" Current="1_2020">
+      <FilterItems>
+        <Items Id="1_2017" Name="2017 Super Netball" />
+        <Items Id="1_2018" Name="2018 Super Netball" />
+        <Items Id="1_2019" Name="2019 Super Netball" />
+        <Items Id="1_2020" Name="2020 Super Netball" />
+      </FilterItems>
+    </Filter>
+    <Filter QueryParameter="id" Type="Scroller" Current="1">
+      <FilterItems>
+        <Items Id="1" Name="Round 1" />
+        <Items Id="2" Name="Round 2" />
+        <Items Id="3" Name="Round 3" />
+        <Items Id="4" Name="Round 4" />
+        <Items Id="5" Name="Round 5" />
+        <Items Id="6" Name="Round 6" />
+        <Items Id="7" Name="Round 7" />
+        <Items Id="8" Name="Round 8" />
+        <Items Id="9" Name="Round 9" />
+        <Items Id="10" Name="Round 10" />
+        <Items Id="11" Name="Round 11" />
+        <Items Id="12" Name="Round 12" />
+        <Items Id="13" Name="Round 13" />
+        <Items Id="14" Name="Round 14" />
+        <Items Id="15" Name="Semi-Finals" />
+        <Items Id="16" Name="Preliminary Finals" />
+        <Items Id="17" Name="Grand Final" />
+      </FilterItems>
+    </Filter>
+  </Filters>
+  <Week>Round 1</Week>
+  <Weeks>
+    <Previous />
+    <Current>1</Current>
+    <Next>2</Next>
+    <Week Id="1" Name="Round 1" />
+    <Week Id="2" Name="Round 2" />
+    <Week Id="3" Name="Round 3" />
+    <Week Id="4" Name="Round 4" />
+    <Week Id="5" Name="Round 5" />
+    <Week Id="6" Name="Round 6" />
+    <Week Id="7" Name="Round 7" />
+    <Week Id="8" Name="Round 8" />
+    <Week Id="9" Name="Round 9" />
+    <Week Id="10" Name="Round 10" />
+    <Week Id="11" Name="Round 11" />
+    <Week Id="12" Name="Round 12" />
+    <Week Id="13" Name="Round 13" />
+    <Week Id="14" Name="Round 14" />
+    <Week Id="15" Name="Semi-Finals" />
+    <Week Id="16" Name="Preliminary Finals" />
+    <Week Id="17" Name="Grand Final" />
+  </Weeks>
+  <Day Name="ROUND 1">
+    <Game Id="111080101">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>P</State>
+      <Timestamp>2020-05-02T05:00:00Z</Timestamp>
+      <Network>Melbourne Arena</Network>
+      <GameState>Scheduled</GameState>
+      <HomeTeam TriCode="VIX" Name="Vixens" FullName="Melbourne Vixens" Record="" Score="" />
+      <AwayTeam TriCode="FIR" Name="Firebirds" FullName="Queensland Firebirds" Record="" Score="" />
+      <Broadcasters SecondScreenEnabled="false">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+          <Channel Name="Channel 9">
+            <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/9.png</ImageUrl>
+          </Channel>
+        </Country>
+      </Broadcasters>
+    </Game>
+    <Game Id="111080102">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>P</State>
+      <Timestamp>2020-05-02T09:00:00Z</Timestamp>
+      <Network>Melbourne Arena</Network>
+      <GameState>Scheduled</GameState>
+      <HomeTeam TriCode="MAG" Name="Magpies" FullName="Magpies Netball" Record="" Score="" />
+      <AwayTeam TriCode="FEV" Name="Fever" FullName="West Coast Fever" Record="" Score="" />
+      <Broadcasters SecondScreenEnabled="true">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+          <Channel Name="TelstraTV">
+            <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/TelstraTV.png</ImageUrl>
+          </Channel>
+        </Country>
+      </Broadcasters>
+    </Game>
+    <Game Id="111080103">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>P</State>
+      <Timestamp>2020-05-03T03:00:00Z</Timestamp>
+      <Network>Ken Rosewall Arena</Network>
+      <GameState>Scheduled</GameState>
+      <HomeTeam TriCode="SWI" Name="Swifts" FullName="NSW Swifts" Record="" Score="" />
+      <AwayTeam TriCode="LIG" Name="Lightning" FullName="Sunshine Coast Lightning" Record="" Score="" />
+      <Broadcasters SecondScreenEnabled="false">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+          <Channel Name="Channel 9">
+            <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/9.png</ImageUrl>
+          </Channel>
+        </Country>
+      </Broadcasters>
+    </Game>
+    <Game Id="111080104">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>P</State>
+      <Timestamp>2020-05-03T05:00:00Z</Timestamp>
+      <Network>Priceline Stadium</Network>
+      <GameState>Scheduled</GameState>
+      <HomeTeam TriCode="THU" Name="Thunderbirds" FullName="Adelaide Thunderbirds" Record="" Score="25" />
+      <AwayTeam TriCode="GIA" Name="Giants" FullName="Giants Netball" Record="" Score="30" />
+      <Broadcasters SecondScreenEnabled="true">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+          <Channel Name="TelstraTV">
+            <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/TelstraTV.png</ImageUrl>
+          </Channel>
+        </Country>
+      </Broadcasters>
+    </Game>
+  </Day>
+  <YinzNode InVenue="false" VenueStatus="O" Ads="YC" InHomeMarket="O" Generated="2/3/2020 11:00:00 AM" />
+</Scores>

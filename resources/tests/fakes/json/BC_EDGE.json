@@ -1,0 +1,73 @@
+{
+    "account_id": "6057984925001",
+    "ad_keys": null,
+    "created_at": "2019-08-04T06:34:14.000Z",
+    "cue_points": [],
+    "custom_fields": {
+        "asset_ref": "1000515",
+        "channel": "/Category/Sport/NetballAustralia",
+        "competition": "SuperNetball",
+        "content_provider": "Chief_Manual",
+        "expiry_date": "2022-01-30T13:00:00.000Z",
+        "filehash": "5fdea028ef74511b4b4975b43a1aaac7",
+        "match": "107241103",
+        "player_ids": "",
+        "program_category": "Replays",
+        "program_type": "MatchReplays",
+        "publish_date": "2019-08-04T06:57:00.000Z",
+        "round": "11",
+        "season": "2019",
+        "tags": "",
+        "team": "Giants,Firebirds",
+        "transcoder": "Ooyala",
+        "web_sites": "Supernetball"
+    },
+    "description": "",
+    "duration": 4476949,
+    "economics": "AD_SUPPORTED",
+    "id": "1647215572322985741",
+    "link": null,
+    "long_description": "Match replay between the Giants Netball & Queensland Firebirds.",
+    "name": "2019 Round 11: Giants v Firebirds (Replay)",
+    "offline_enabled": false,
+    "poster": "https://cf-images.ap-southeast-2.prod.boltdns.net/v1/static/6057984925001/8aa4e8f0-9ca6-4db2-ab51-14c83c8c07d6/53af929c-fba3-4c81-b6cc-d8e1134b91b5/1280x720/match/image.jpg",
+    "poster_sources": [
+        {
+            "src": "https://cf-images.ap-southeast-2.prod.boltdns.net/v1/static/6057984925001/8aa4e8f0-9ca6-4db2-ab51-14c83c8c07d6/53af929c-fba3-4c81-b6cc-d8e1134b91b5/1280x720/match/image.jpg"
+        }
+    ],
+    "published_at": "2019-08-04T06:57:00.000Z",
+    "reference_id": "NmajZhaTE6N8v4sFfn4ZMqe3G1OpeFbJ",
+    "sources": [
+        {
+            "ext_x_version": "4",
+            "src": "http://manifest.prod.boltdns.net/manifest/v1/hls/v4/clear/6057984925001/8aa4e8f0-9ca6-4db2-ab51-14c83c8c07d6/10s/master.m3u8?fastly_token=NWUzYTdhMTFfM2UzYzdiMGMwMzdlODk2Zjk2OTFjZmY4OWE3NThlMTc1Y2U2ZWZmZGU3ZGJiNGNkYzI1YTgxODUwNmUyYzM3Yw%3D%3D",
+            "type": "application/x-mpegURL"
+        },
+        {
+            "ext_x_version": "4",
+            "src": "https://foo.bar/video.m3u8",
+            "type": "application/x-mpegURL"
+        },
+        {
+            "profiles": "urn:mpeg:dash:profile:isoff-live:2011",
+            "src": "http://manifest.prod.boltdns.net/manifest/v1/dash/live-baseurl/clear/6057984925001/8aa4e8f0-9ca6-4db2-ab51-14c83c8c07d6/6s/manifest.mpd?fastly_token=NWUzYTdhMTFfNzY2ZTE3ZTcwNzk4ZTJjMDBkZWU3YTc1ZmUxN2I5YTFjZDBkMGJmNTQxZDdlMmY0OWU2ZTE0YTcwZTk5ZjBjMw%3D%3D",
+            "type": "application/dash+xml"
+        },
+        {
+            "profiles": "urn:mpeg:dash:profile:isoff-live:2011",
+            "src":
+"https://manifest.prod.boltdns.net/manifest/v1/dash/live-baseurl/clear/6057984925001/8aa4e8f0-9ca6-4db2-ab51-14c83c8c07d6/6s/manifest.mpd?fastly_token=NWUzYTdhMTFfNzY2ZTE3ZTcwNzk4ZTJjMDBkZWU3YTc1ZmUxN2I5YTFjZDBkMGJmNTQxZDdlMmY0OWU2ZTE0YTcwZTk5ZjBjMw%3D%3D",
+            "type": "application/dash+xml"
+        }
+    ],
+    "tags": [],
+    "text_tracks": [],
+    "thumbnail": "https://cf-images.ap-southeast-2.prod.boltdns.net/v1/static/6057984925001/8aa4e8f0-9ca6-4db2-ab51-14c83c8c07d6/68b2c03c-e695-4f4c-bf52-a642671eca1b/160x90/match/image.jpg",
+    "thumbnail_sources": [
+        {
+            "src": "https://cf-images.ap-southeast-2.prod.boltdns.net/v1/static/6057984925001/8aa4e8f0-9ca6-4db2-ab51-14c83c8c07d6/68b2c03c-e695-4f4c-bf52-a642671eca1b/160x90/match/image.jpg"
+        }
+    ],
+    "updated_at": "2020-02-03T13:00:00.000Z"
+}
