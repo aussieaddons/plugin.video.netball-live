@@ -1,16 +1,12 @@
 from __future__ import absolute_import, unicode_literals
 
-import datetime
 import io
 import os
-import sys
 
 try:
     import mock
 except ImportError:
     import unittest.mock as mock
-
-from future.moves.urllib.parse import parse_qsl
 
 import responses
 
@@ -18,29 +14,6 @@ import testtools
 
 import resources.lib.config as config
 from resources.tests.fakes import fakes
-
-#  https://blog.xelnor.net/python-mocking-datetime/
-real_datetime_class = datetime.datetime
-
-
-def mock_datetime_now(target, dt):
-    class DatetimeSubclassMeta(type):
-        @classmethod
-        def __instancecheck__(mcs, obj):
-            return isinstance(obj, real_datetime_class)
-
-    class BaseMockedDatetime(real_datetime_class):
-        @classmethod
-        def now(cls, tz=None):
-            return target.replace(tzinfo=tz)
-
-        @classmethod
-        def utcnow(cls):
-            return target
-
-    MockedDatetime = DatetimeSubclassMeta(
-        str('datetime'), (BaseMockedDatetime,), {})
-    return mock.patch.object(dt, 'datetime', MockedDatetime)
 
 
 class MenusTests(testtools.TestCase):

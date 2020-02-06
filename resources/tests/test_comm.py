@@ -7,7 +7,6 @@ import responses
 
 import testtools
 
-import resources.lib.classes as classes
 import resources.lib.comm as comm
 import resources.lib.config as config
 

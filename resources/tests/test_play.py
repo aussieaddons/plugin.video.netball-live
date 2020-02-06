@@ -41,7 +41,8 @@ class PlayTests(testtools.TestCase):
     @mock.patch('sys.argv',
                 ['plugin://plugin.video.nrl-live/',
                  '2',
-                 '?action=listmatches&video_id=1647215572322985741&account_id=6057984925001&'])
+                 '?action=listmatches&video_id=1647215572322985741'
+                 '&account_id=6057984925001&'])
     def test_play_video(self, mock_listitem, mock_ticket):
         params = dict(parse_qsl(sys.argv[2][1:]))
         escaped_bc_url = re.escape(

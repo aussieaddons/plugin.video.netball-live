@@ -1,12 +1,13 @@
-import classes
-import config
 import datetime
 import json
 import time
 import xml.etree.ElementTree as ET
 
-from aussieaddonscommon import utils
 from aussieaddonscommon import session
+from aussieaddonscommon import utils
+
+from resources.lib import classes
+from resources.lib import config
 
 
 def get_airtime(timestamp):
@@ -62,9 +63,7 @@ def list_matches(params):
                 continue
 
             v = classes.Video()
-            v.title = gm.find('Title').text.encode('ascii', 'replace')
-            #if gm.find('Description') is not None:
-            #    v.desc = gm.find('Description').text.encode('ascii', 'replace')
+            v.title = utils.ensure_ascii(gm.find('Title').text)
             v.video_id = gm.find('Video').attrib['Id']
             v.account_id = gm.find('Video').attrib['AccountId']
             v.policy_key = gm.find('Video').attrib['PolicyKey']
@@ -181,10 +180,12 @@ def get_score(match_id):
                     return '[COLOR yellow]{0} - {1}[/COLOR]'.format(
                         home_score, away_score)
 
+
 def get_stream_url(params):
     bc_url = config.BC_URL.format(params.get('account_id'),
                                   params.get('video_id'))
-    data = json.loads(fetch_url(bc_url, {'BCOV-POLICY': params.get('policy_key')}))
+    data = json.loads(
+        fetch_url(bc_url, {'BCOV-POLICY': params.get('policy_key')}))
     src = None
     sources = data.get('sources')
     if len(sources) == 1:

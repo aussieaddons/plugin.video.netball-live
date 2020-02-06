@@ -1,22 +1,20 @@
 import os
 import sys
-import xbmc
-import xbmcgui
+
+from future.moves.urllib.parse import parse_qsl
+
+from resources.lib import categories
+from resources.lib import matches
+from resources.lib import play
+from resources.lib import stream_auth
+
 import xbmcaddon
-from urlparse import parse_qsl
 
-addon = xbmcaddon.Addon()
-cwd = xbmc.translatePath(addon.getAddonInfo('path')).decode("utf-8")
-BASE_RESOURCE_PATH = os.path.join(cwd, 'resources', 'lib')
-sys.path.append(BASE_RESOURCE_PATH)
-
-import ooyalahelper  # noqa: E402
-import play  # noqa: E402
-import matches  # noqa: E402
-import categories  # noqa: E402
+import xbmcgui
 
 _url = sys.argv[0]
 _handle = int(sys.argv[1])
+addon = xbmcaddon.Addon()
 addonname = addon.getAddonInfo('name')
 addonPath = xbmcaddon.Addon().getAddonInfo("path")
 fanart = os.path.join(addonPath, 'fanart.jpg')
@@ -38,7 +36,7 @@ def router(paramstring):
         elif params['action'] == 'listmatches':
             play.play_video(params)
         elif params['action'] == 'clearticket':
-            ooyalahelper.clear_ticket()
+            stream_auth.clear_ticket()
     else:
         categories.list_categories()
 

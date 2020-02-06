@@ -11,13 +11,14 @@ from future.moves.urllib.parse import parse_qsl, urlparse, urlsplit
 
 import requests
 
-from aussieaddonscommon.exceptions import AussieAddonsException
 from aussieaddonscommon import session as custom_session
 from aussieaddonscommon import utils
+from aussieaddonscommon.exceptions import AussieAddonsException
 
 from resources.lib import config
 
 import xbmcgui
+
 
 class TelstraAuthException(AussieAddonsException):
     """Telstra Auth exception
@@ -310,4 +311,3 @@ class TelstraAuth(object):
         self.prog_dialog.update(100, 'Finished!')
         self.prog_dialog.close()
         return self.ticket
-

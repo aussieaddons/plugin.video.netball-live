@@ -8,8 +8,6 @@ try:
 except ImportError:
     import unittest.mock as mock
 
-from future.moves.urllib.parse import quote
-
 import responses
 
 import testtools
@@ -130,7 +128,7 @@ class TelstraAuthTests(testtools.TestCase):
         auth = telstra_auth.TelstraAuth('foo', 'bar')
         observed = auth.get_free_token()
         self.assertEqual('ticket123',
-            observed)
+                         observed)
 
     @responses.activate
     @mock.patch('os.urandom')

@@ -7,11 +7,8 @@ try:
 except ImportError:
     import unittest.mock as mock
 
-import responses
-
 import testtools
 
-import resources.lib.config as config
 import resources.lib.stream_auth as stream_auth
 
 
