@@ -25,13 +25,12 @@ def make_matches_list(params):
         matches = comm.list_matches(params)
 
         for m in matches:
-            li = xbmcgui.ListItem(label=str(m.title),
-                                  iconImage=m.thumb,
-                                  thumbnailImage=m.thumb)
+            li = xbmcgui.ListItem(label=str(m.title))
             url = '{0}?action=listmatches{1}'.format(_url, m.make_kodi_url())
             is_folder = False
             li.setProperty('IsPlayable', 'true')
             li.setInfo('video', {'plot': m.title, 'plotoutline': m.title})
+            li.setArt({'icon': m.thumb, 'thumb': m.thumb})
             listing.append((url, li, is_folder))
 
         if params['category'] == 'livematches':

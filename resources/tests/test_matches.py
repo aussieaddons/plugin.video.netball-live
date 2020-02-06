@@ -51,8 +51,8 @@ class MenusTests(testtools.TestCase):
             matches.make_matches_list({'category': 'MatchReplays'})
             expected_title = '2019 Round 11: Giants v Firebirds (Replay)'
             expected = fakes.FakeListItem(expected_title)
-            expected.setThumbnailImage('example.jpg')
-            expected.setIconImage('example.jpg')
+            expected.setArt({'icon': 'example.jpg',
+                             'thumb': 'example.jpg'})
             expected.setInfo('video', {'plot': expected_title,
                                        'plotoutline': expected_title})
             expected.setProperty('IsPlayable', 'true')
