@@ -3,6 +3,8 @@ import sys
 
 from future.moves.urllib.parse import parse_qsl
 
+from aussieaddonscommon import utils
+
 from resources.lib import categories
 from resources.lib import matches
 from resources.lib import play
@@ -37,6 +39,20 @@ def router(paramstring):
             play.play_video(params)
         elif params['action'] == 'clearticket':
             stream_auth.clear_ticket()
+        elif params['action'] == 'sendreport':
+            utils.user_report()
+        elif params['action'] == 'open_ia_settings':
+            try:
+                import drmhelper
+                if drmhelper.check_inputstream(drm=False):
+                    ia = drmhelper.get_addon()
+                    ia.openSettings()
+                else:
+                    utils.dialog_message(
+                        "Can't open inputstream.adaptive settings")
+            except Exception:
+                utils.dialog_message(
+                    "Can't open inputstream.adaptive settings")
     else:
         categories.list_categories()
 
