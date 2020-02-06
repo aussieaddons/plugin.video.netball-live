@@ -1,22 +1,22 @@
 import os
 import sys
-import xbmc
-import xbmcgui
+
+from future.moves.urllib.parse import parse_qsl
+
+from aussieaddonscommon import utils
+
+from resources.lib import categories
+from resources.lib import matches
+from resources.lib import play
+from resources.lib import stream_auth
+
 import xbmcaddon
-from urlparse import parse_qsl
 
-addon = xbmcaddon.Addon()
-cwd = xbmc.translatePath(addon.getAddonInfo('path')).decode("utf-8")
-BASE_RESOURCE_PATH = os.path.join(cwd, 'resources', 'lib')
-sys.path.append(BASE_RESOURCE_PATH)
-
-import ooyalahelper  # noqa: E402
-import play  # noqa: E402
-import matches  # noqa: E402
-import categories  # noqa: E402
+import xbmcgui
 
 _url = sys.argv[0]
 _handle = int(sys.argv[1])
+addon = xbmcaddon.Addon()
 addonname = addon.getAddonInfo('name')
 addonPath = xbmcaddon.Addon().getAddonInfo("path")
 fanart = os.path.join(addonPath, 'fanart.jpg')
@@ -31,16 +31,28 @@ def router(paramstring):
     params = dict(parse_qsl(paramstring))
     if params:
         if params['action'] == 'listcategories':
-            if params['category'] == 'livematches':
-                matches.make_matches_list(params, live=True)
-            elif params['category'] == 'settings':
+            if params['category'] == 'settings':
                 addon.openSettings()
             else:
                 matches.make_matches_list(params)
         elif params['action'] == 'listmatches':
             play.play_video(params)
         elif params['action'] == 'clearticket':
-            ooyalahelper.clear_ticket()
+            stream_auth.clear_ticket()
+        elif params['action'] == 'sendreport':
+            utils.user_report()
+        elif params['action'] == 'open_ia_settings':
+            try:
+                import drmhelper
+                if drmhelper.check_inputstream(drm=False):
+                    ia = drmhelper.get_addon()
+                    ia.openSettings()
+                else:
+                    utils.dialog_message(
+                        "Can't open inputstream.adaptive settings")
+            except Exception:
+                utils.dialog_message(
+                    "Can't open inputstream.adaptive settings")
     else:
         categories.list_categories()
 

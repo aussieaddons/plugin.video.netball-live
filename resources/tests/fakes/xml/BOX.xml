@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Boxscore>
+  <Id>107250301</Id>
+  <Timestamp>2019-09-15T03:00:00Z</Timestamp>
+  <AwayTeam TriCode="SWI" Id="806" Name="Swifts" FullName="NSW Swifts" Record="2nd" LadderPosition="2nd" Score="64" />
+  <HomeTeam TriCode="LIG" Id="8117" Name="Lightning" FullName="Sunshine Coast Lightning" Record="1st" LadderPosition="1st" Score="47" />
+  <Unavailable>No stats are currently available.  Please check back when the game starts.</Unavailable>
+  <State>F</State>
+  <GameState>Full Time</GameState>
+  <Quarter>Q4</Quarter>
+  <Clock>15:00</Clock>
+  <Venue>Brisbane Entertainment Centre</Venue>
+  <Week>Grand Final</Week>
+  <Broadcasters SecondScreenEnabled="false">
+    <Country Name="Australia" Iso="AUS">
+      <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+      <Channel Name="Channel 9">
+        <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/9.png</ImageUrl>
+      </Channel>
+    </Country>
+  </Broadcasters>
+  <Score State="FULL TIME" HasOT="false">
+    <ScorePeriod Column="Q1" Away="16" Home="12" AwayValue="16" HomeValue="12" IsTotal="false" />
+    <ScorePeriod Column="Q2" Away="15" Home="11" AwayValue="15" HomeValue="11" IsTotal="false" />
+    <ScorePeriod Column="Q3" Away="15" Home="13" AwayValue="15" HomeValue="13" IsTotal="false" />
+    <ScorePeriod Column="Q4" Away="18" Home="11" AwayValue="18" HomeValue="11" IsTotal="false" />
+    <ScorePeriod Column="T" Away="64" Home="47" AwayValue="64" HomeValue="47" IsTotal="true" />
+  </Score>
+  <WatchButton>
+    <Title>WATCH FOO LIVE</Title>
+    <URL>yc://feature/BRIGHTCOVE_VIDEO?mediaId=4156</URL>
+    <Type>Default</Type>
+  </WatchButton>
+  <HeadlineButtons>
+    <Button>
+      <Title>MATCH CENTRE</Title>
+      <URL>yc://feature/GT_BOX?id=107250301</URL>
+      <Type>Default</Type>
+    </Button>
+    <Button>
+      <Title>WATCH REPLAY</Title>
+      <URL>yc://feature/BRIGHTCOVE_VIDEO?mediaId=4156</URL>
+      <Type>Default</Type>
+    </Button>
+  </HeadlineButtons>
+  <Resources>
+    <Resource Major="GT_BOX">
+      <Button Title="MATCH CENTRE" Type="GT_BOX" Selected="true" />
+      <Button Title="PLAYERS" Type="GT_PLAYER" Selected="false" URL="yc://feature/GT_PLAYER?id=107250301" />
+    </Resource>
+    <Resource Major="GT_PLAYER">
+      <Button Title="MATCH CENTRE" Type="GT_BOX" Selected="false" URL="yc://feature/GT_BOX?id=107250301" />
+      <Button Title="PLAYERS" Type="GT_PLAYER" Selected="true" />
+    </Resource>
+  </Resources>
+  <Stats Heading="TEAM STATS">
+    <Stat Type="StatHeader" Name="" Home="LIG" HomeDescription="LIG" HomeValue="0" HomeMax="0" Away="SWI" AwayDescription="SWI" AwayValue="0" AwayMax="0" Max="0" Reverse="false" />
+    <Stat Type="PercentCircle" Name="GOAL %" Home="80%" HomeValue="0.7966102" HomeMax="1" Away="88%" AwayValue="0.8767123" AwayMax="1" Max="1" Reverse="false" />
+    <Stat Type="Bar" Name="NET POINTS" Home="288.0" HomeValue="288" HomeMax="288" Away="471.5" AwayValue="471.5" AwayMax="471.5" Max="759.5" Reverse="false" />
+    <Stat Type="Bar" Name="GAIN" Home="9" HomeValue="9" HomeMax="9" Away="19" AwayValue="19" AwayMax="19" Max="28" Reverse="false" />
+    <Stat Type="Bar" Name="REBOUND - OFFENSIVE" Home="4" HomeValue="4" HomeMax="4" Away="5" AwayValue="5" AwayMax="5" Max="9" Reverse="false" />
+    <Stat Type="Bar" Name="REBOUND - DEFENSIVE" Home="1" HomeValue="1" HomeMax="1" Away="6" AwayValue="6" AwayMax="6" Max="7" Reverse="false" />
+    <Stat Type="Bar" Name="INTERCEPT" Home="5" HomeValue="5" HomeMax="5" Away="9" AwayValue="9" AwayMax="9" Max="14" Reverse="false" />
+    <Stat Type="Bar" Name="DEFLECTION" Home="18" HomeValue="18" HomeMax="18" Away="17" AwayValue="17" AwayMax="17" Max="35" Reverse="false" />
+    <Stat Type="Bar" Name="PENALTY - CONTACT" Home="49" HomeValue="49" HomeMax="49" Away="35" AwayValue="35" AwayMax="35" Max="84" Reverse="true" />
+    <Stat Type="Bar" Name="PENALTY - OBSTRUCTION" Home="2" HomeValue="2" HomeMax="2" Away="17" AwayValue="17" AwayMax="17" Max="19" Reverse="true" />
+    <Stat Type="Bar" Name="TURNOVER - BAD HANDS" Home="1" HomeValue="1" HomeMax="1" Away="0" AwayValue="0" AwayMax="0" Max="1" Reverse="true" />
+    <Stat Type="Bar" Name="TURNOVER - BAD PASS" Home="1" HomeValue="1" HomeMax="1" Away="3" AwayValue="3" AwayMax="3" Max="4" Reverse="true" />
+  </Stats>
+  <YinzNode InVenue="false" VenueStatus="O" Ads="YC" InHomeMarket="O" Generated="2/3/2020 11:00:00 AM" />
+</Boxscore>

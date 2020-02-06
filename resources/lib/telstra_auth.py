@@ -11,13 +11,14 @@ from future.moves.urllib.parse import parse_qsl, urlparse, urlsplit
 
 import requests
 
-from aussieaddonscommon.exceptions import AussieAddonsException
 from aussieaddonscommon import session as custom_session
 from aussieaddonscommon import utils
+from aussieaddonscommon.exceptions import AussieAddonsException
 
 from resources.lib import config
 
 import xbmcgui
+
 
 class TelstraAuthException(AussieAddonsException):
     """Telstra Auth exception
@@ -58,7 +59,6 @@ class TelstraAuth(object):
                                             adid=adid, deviceid=deviceid))
         ticket_json = json.loads(ticket_resp.text)
         self.ticket = ticket_json.get('Ticket')
-        #self.ticket = ticket_xml.find('Ticket').text
         self.session.headers = {'Accept': 'application/json, text/plain, */*'}
         self.session.headers.update({'X-YinzCam-Ticket': self.ticket})
 
@@ -311,4 +311,3 @@ class TelstraAuth(object):
         self.prog_dialog.update(100, 'Finished!')
         self.prog_dialog.close()
         return self.ticket
-

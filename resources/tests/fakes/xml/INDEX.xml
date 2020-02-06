@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Home>
+  <State>P</State>
+  <CardTabs Default="CARDS" IconType="T">
+    <List Title="FEATURED" Default="true">CARDS</List>
+    <List Title="LATEST">M</List>
+    <List Title="TWITTER">T</List>
+  </CardTabs>
+  <HeadlineGames>
+    <Game Id="107250301" Default="true" />
+  </HeadlineGames>
+  <HeadlineItems>
+    <Item Type="BoxScore" Id="107250301" Default="true" />
+  </HeadlineItems>
+  <YinzNode InVenue="false" VenueStatus="O" Ads="YC" InHomeMarket="O" Generated="2/4/2020 11:27:58 AM" />
+</Home>

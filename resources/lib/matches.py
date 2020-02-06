@@ -1,35 +1,39 @@
-import xbmcgui
-import xbmcplugin
-import xbmcaddon
-import comm
-import sys
 import os
+import sys
+
 from aussieaddonscommon import utils
+
+from resources.lib import comm
+
+import xbmcaddon
+
+import xbmcgui
+
+import xbmcplugin
 
 _url = sys.argv[0]
 _handle = int(sys.argv[1])
 addon_path = xbmcaddon.Addon().getAddonInfo("path")
 
 
-def make_matches_list(params, live=False):
+def make_matches_list(params):
     """
     Build match listing for Kodi
     """
     try:
         listing = []
-        matches = comm.list_matches(params, live)
+        matches = comm.list_matches(params)
 
         for m in matches:
-            li = xbmcgui.ListItem(label=str(m.title),
-                                  iconImage=m.thumb,
-                                  thumbnailImage=m.thumb)
+            li = xbmcgui.ListItem(label=str(m.title))
             url = '{0}?action=listmatches{1}'.format(_url, m.make_kodi_url())
             is_folder = False
             li.setProperty('IsPlayable', 'true')
-            li.setInfo('video', {'plot': m.desc, 'plotoutline': m.desc})
+            li.setInfo('video', {'plot': m.title, 'plotoutline': m.title})
+            li.setArt({'icon': m.thumb, 'thumb': m.thumb})
             listing.append((url, li, is_folder))
 
-        if live:
+        if params['category'] == 'livematches':
             upcoming = comm.get_upcoming()
             for event in upcoming:
                 thumb = os.path.join(addon_path, 'resources', 'soon.jpg')

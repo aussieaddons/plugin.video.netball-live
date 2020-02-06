@@ -1,0 +1,106 @@
+{
+    "correlationId": "69adf757-880b-4f3f-b714-5854d7426d2f",
+    "data": {
+        "cac": "6453871222",
+        "customerType": "CONSUMER",
+        "endDateTime": "2021-01-31T23:59:59.000+1100",
+        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+        "offer": {
+            "bonusEndDateTime": "2021-01-31T23:59:59.000+1100",
+            "bonusPeriod": 0,
+            "carrierBillableOffer": true,
+            "channelTags": [
+                "All_v1Apps_All_3248",
+                "TTV_OneApp_HomeScreen_7677",
+                "All_MyOffersPortal_Offerpage_4368",
+                "All_MyTelstra_Summary_6859"
+            ],
+            "contractTerm": 0,
+            "externalId": "NA",
+            "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+            "name": "Netball Live Pass",
+            "oneOffCharge": 0,
+            "productOfferingAttributes": [
+                {
+                    "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                    "name": "OfferType",
+                    "value": "base"
+                },
+                {
+                    "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                    "name": "carrierBillable",
+                    "value": "true"
+                }
+            ],
+            "productOffers": [
+                {
+                    "contractTerm": 1,
+                    "externalId": "NA",
+                    "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                    "name": "Netball Live Pass Streaming",
+                    "oneOffCharge": 0,
+                    "product": {
+                        "category": "Sport",
+                        "description": "Netball Streaming",
+                        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                        "partner": {
+                            "description": "Netball Australia",
+                            "id": "netball",
+                            "name": "Netball",
+                            "website": "https://netball.com.au/"
+                        },
+                        "productName": "netball_streaming",
+                        "productUrl": "https://netball.com.au/"
+                    },
+                    "recurringCharge": 0,
+                    "requiredPaiPattern": ".*",
+                    "url": "http://media.telstra.com.au/netball.html"
+                }
+            ],
+            "publishEndDate": "2021-01-31T23:59:59.999+1100",
+            "publishStartDate": "2017-01-31T00:00:00.000+1100",
+            "recurringCharge": 0,
+            "reuptakeAllowed": true,
+            "serviceTransferAllowed": false,
+            "totalPrice": 0
+        },
+        "orderItems": [
+            {
+                "correlationId": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                "endDateTime": "2021-01-31T23:59:59.000+1100",
+                "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                "pai": "58686870-e287-4cf9-889c-3969291d4023|MuUVoqYPXNhOmr2A2c7sszlNwx08e1uDeENc4LYVRpt",
+                "productOffer": {
+                    "contractTerm": 1,
+                    "externalId": "NA",
+                    "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                    "name": "Netball Live Pass Streaming",
+                    "oneOffCharge": 0,
+                    "product": {
+                        "category": "Sport",
+                        "description": "Netball Streaming",
+                        "id": "69adf757-880b-4f3f-b714-5854d7426d2f",
+                        "partner": {
+                            "description": "Netball Australia",
+                            "id": "netball",
+                            "name": "Netball",
+                            "website": "https://netball.com.au/"
+                        },
+                        "productName": "netball_streaming",
+                        "productUrl": "https://netball.com.au/"
+                    },
+                    "recurringCharge": 0,
+                    "requiredPaiPattern": ".*",
+                    "url": "http://media.telstra.com.au/netball.html"
+                },
+                "startDateTime": "2020-02-03T14:00:00.000+1100",
+                "status": "COMPLETE"
+            }
+        ],
+        "serviceId": "61400000000",
+        "serviceType": "MSISDN",
+        "startDateTime": "2020-02-03T14:00:00.000+1100",
+        "status": "COMPLETE"
+    },
+    "time": "2020-02-03T14:00:00.000+1100"
+}

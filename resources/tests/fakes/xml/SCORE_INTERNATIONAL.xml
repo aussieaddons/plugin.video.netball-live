@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Scores>
+  <Filters>
+    <Filter QueryParameter="compId" Type="Arrow" Current="14_2019">
+      <FilterItems>
+        <Items Id="10_2017" Name="2017 Quad Series" />
+        <Items Id="11_2017" Name="2017 Constellation Cup" />
+        <Items Id="12_2018" Name="2018 Jan Quad Series" />
+        <Items Id="10_2018" Name="2018 Quad Series" />
+        <Items Id="11_2018" Name="2018 Constellation Cup" />
+        <Items Id="12_2019" Name="2019 Jan Quad Series" />
+        <Items Id="14_2019" Name="2019 Constellation Cup" />
+      </FilterItems>
+    </Filter>
+  </Filters>
+  <Day Name="">
+    <Game Id="109850101">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>F</State>
+      <Timestamp>2019-10-13T03:00:00Z</Timestamp>
+      <Network>Horncastle Arena</Network>
+      <GameState>Full Time</GameState>
+      <HomeTeam TriCode="NZL" Name="Silver Ferns" FullName="New Zealand Silver Ferns" Record="2nd" Score="53" />
+      <AwayTeam TriCode="AUS" Name="Diamonds" FullName="Australian Diamonds" Record="1st" Score="52" />
+      <Broadcasters SecondScreenEnabled="false">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+          <Channel Name="Channel 9">
+            <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/9.png</ImageUrl>
+          </Channel>
+        </Country>
+      </Broadcasters>
+    </Game>
+    <Game Id="109850102">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>F</State>
+      <Timestamp>2019-10-16T06:30:00Z</Timestamp>
+      <Network>Spark Arena</Network>
+      <GameState>Full Time</GameState>
+      <HomeTeam TriCode="NZL" Name="Silver Ferns" FullName="New Zealand Silver Ferns" Record="2nd" Score="42" />
+      <AwayTeam TriCode="AUS" Name="Diamonds" FullName="Australian Diamonds" Record="1st" Score="48" />
+      <Broadcasters SecondScreenEnabled="false">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+        </Country>
+      </Broadcasters>
+    </Game>
+    <Game Id="109850103">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>F</State>
+      <Timestamp>2019-10-20T02:00:00Z</Timestamp>
+      <Network>Qudos Bank Arena</Network>
+      <GameState>Full Time</GameState>
+      <HomeTeam TriCode="AUS" Name="Diamonds" FullName="Australian Diamonds" Record="1st" Score="53" />
+      <AwayTeam TriCode="NZL" Name="Silver Ferns" FullName="New Zealand Silver Ferns" Record="2nd" Score="54" />
+      <Broadcasters SecondScreenEnabled="false">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+          <Channel Name="Channel 9">
+            <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/9.png</ImageUrl>
+          </Channel>
+        </Country>
+      </Broadcasters>
+    </Game>
+    <Game Id="109850104">
+      <DisableMatchcentre>false</DisableMatchcentre>
+      <State>F</State>
+      <Timestamp>2019-10-27T02:00:00Z</Timestamp>
+      <Network>RAC Arena</Network>
+      <GameState>Full Time</GameState>
+      <HomeTeam TriCode="AUS" Name="Diamonds" FullName="Australian Diamonds" Record="1st" Score="53" />
+      <AwayTeam TriCode="NZL" Name="Silver Ferns" FullName="New Zealand Silver Ferns" Record="2nd" Score="46" />
+      <Broadcasters SecondScreenEnabled="false">
+        <Country Name="Australia" Iso="AUS">
+          <ImageUrl>https://yc-app-resources.s3.amazonaws.com/common/flags/ioc_AUS.png</ImageUrl>
+          <Channel Name="Channel 9">
+            <ImageUrl>https://s3-ap-southeast-2.amazonaws.com/resources-net.yinzcam.com/shared/net_league/images/9.png</ImageUrl>
+          </Channel>
+        </Country>
+      </Broadcasters>
+    </Game>
+  </Day>
+  <YinzNode InVenue="false" VenueStatus="O" Ads="YC" InHomeMarket="O" Generated="2/3/2020 11:00:00 AM" />
+</Scores>
