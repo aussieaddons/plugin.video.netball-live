@@ -33,7 +33,7 @@ TAGGEDLIST_PROGRAM_URL = 'https://app-league-net.yinzcam.com/V1/media/taggedlist
 SCORE_URL = 'https://app-league-net.yinzcam.com/V1/Game/Scores/?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&mnc=0&ff=mobile&app_version=2.6.8&mode={mode}&version=5.7&width=1080&os_version=6.0.1&mcc=0&application=NET_LEAGUE'
 
 # index of android app homepage - has current round game id's
-INDEX_URL = 'http://app-league-net.yinzcam.com/V1/Home/Index?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
+INDEX_URL = 'http://app-league-net.yinzcam.com/V1/Home/Index?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&mode={0}&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
 
 # Score and team names for upcoming games
 BOX_URL = 'http://app-league-net.yinzcam.com/V1/Game/Box/{0}?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'

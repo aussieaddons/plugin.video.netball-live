@@ -10,12 +10,16 @@ from resources.lib import classes
 from resources.lib import config
 
 
+def get_tz_delta():
+    delta = (time.mktime(time.localtime()) -
+             time.mktime(time.gmtime())) / 3600
+    if time.localtime().tm_isdst:
+        delta += 1
+    return delta
+
 def get_airtime(timestamp):
     try:
-        delta = ((time.mktime(time.localtime()) -
-                 time.mktime(time.gmtime())) / 3600)
-        if time.localtime().tm_isdst:
-            delta += 1
+        delta = get_tz_delta()
         ts = datetime.datetime.fromtimestamp(
             time.mktime(time.strptime(timestamp[:-1], "%Y-%m-%dT%H:%M:%S")))
         ts += datetime.timedelta(hours=delta)
@@ -111,11 +115,12 @@ def get_index():
     get index of current round's games so we can find the 'box' URL
     and make a list of game ids,
     """
-    data = fetch_url(config.INDEX_URL)
-    tree = ET.fromstring(data)
     listing = []
-    for elem in tree.find('HeadlineGames'):
-        listing.append(elem.attrib['Id'])
+    for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
+        data = fetch_url(config.INDEX_URL.format(mode))
+        tree = ET.fromstring(data)
+        for elem in tree.find('HeadlineGames'):
+            listing.append(elem.attrib['Id'])
     return listing
 
 

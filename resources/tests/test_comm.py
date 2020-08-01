@@ -81,11 +81,12 @@ class CommTests(testtools.TestCase):
 
     @responses.activate
     def test_get_index(self):
-        responses.add(responses.GET,
-                      config.INDEX_URL,
-                      body=self.INDEX_XML, status=200)
+        for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
+            responses.add(responses.GET,
+                          config.INDEX_URL.format(mode),
+                          body=self.INDEX_XML, status=200)
         observed = comm.get_index()
-        self.assertEqual(['107250301'], observed)
+        self.assertEqual(['107250301', '107250301'], observed)
 
     @mock.patch('resources.lib.comm.get_index', lambda: ['107250301'])
     @responses.activate
@@ -98,6 +99,7 @@ class CommTests(testtools.TestCase):
         expected = comm.ET.tostring(comm.ET.fromstring(self.BOX_XML))
         self.assertEqual(expected, comm.ET.tostring(observed[0]))
 
+    @mock.patch('resources.lib.comm.get_tz_delta', lambda: 11)
     @responses.activate
     def test_get_upcoming(self):
         responses.add(responses.GET,
