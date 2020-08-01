@@ -17,6 +17,7 @@ def get_tz_delta():
         delta += 1
     return delta
 
+
 def get_airtime(timestamp):
     try:
         delta = get_tz_delta()
@@ -46,35 +47,36 @@ def list_matches(params):
     category = params['category']
     if category == 'livematches':
         return list_live_matches()
-    if category == 'MatchReplays':
+    if category == 'Match Replays':
         url = config.TAGGEDLIST_REPLAY_URL
     else:
-        url = config.TAGGEDLIST_PROGRAM_URL.format(category)
-    data = fetch_url(url)
-    tree = ET.fromstring(data)
+        url = config.LONGLIST_URL
     listing = []
-    for elem in tree.findall("MediaSection"):
-        for gm in elem.findall('Item'):
-            # remove items with no video eg. news articles
-            if not gm.attrib['Type'] == 'V':
-                continue
-            # filter videos by category
-            for metadata in gm.find('Metadata').findall('Data'):
-                key = metadata.attrib['Key']
-                if key == 'contentType':
-                    content_type = metadata.attrib['Value']
-            if content_type != category:
-                continue
+    for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
+        data = fetch_url(url.format(mode=mode))
+        tree = ET.fromstring(data)
+        for elem in tree.findall("MediaSection"):
+            for gm in elem.findall('Item'):
+                # remove items with no video eg. news articles
+                if not gm.attrib['Type'] == 'V':
+                    continue
+                # filter videos by category
+                for metadata in gm.find('Metadata').findall('Data'):
+                    key = metadata.attrib['Key']
+                    if key == 'contentType':
+                        content_type = metadata.attrib['Value']
+                if content_type != category:
+                    continue
 
-            v = classes.Video()
-            v.title = utils.ensure_ascii(gm.find('Title').text)
-            v.video_id = gm.find('Video').attrib['Id']
-            v.account_id = gm.find('Video').attrib['AccountId']
-            v.policy_key = gm.find('Video').attrib['PolicyKey']
-            v.live = gm.find('LiveNow').text
-            v.thumb = gm.find('FullImageUrl').text
-            v.time = utils.ensure_ascii(gm.find('Date').text)
-            listing.append(v)
+                v = classes.Video()
+                v.title = utils.ensure_ascii(gm.find('Title').text)
+                v.video_id = gm.find('Video').attrib['Id']
+                v.account_id = gm.find('Video').attrib['AccountId']
+                v.policy_key = gm.find('Video').attrib['PolicyKey']
+                v.live = gm.find('LiveNow').text
+                v.thumb = gm.find('FullImageUrl').text
+                v.time = utils.ensure_ascii(gm.find('Date').text)
+                listing.append(v)
     return listing
 
 
@@ -116,8 +118,8 @@ def get_index():
     and make a list of game ids,
     """
     listing = []
-    for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
-        data = fetch_url(config.INDEX_URL.format(mode))
+    for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
+        data = fetch_url(config.INDEX_URL.format(mode=mode))
         tree = ET.fromstring(data)
         for elem in tree.find('HeadlineGames'):
             listing.append(elem.attrib['Id'])
@@ -147,7 +149,7 @@ def get_upcoming():
     """
     listing = []
 
-    for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
+    for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
         data = fetch_url(config.SCORE_URL.format(mode=mode))
         tree = ET.fromstring(data)
 
@@ -173,7 +175,7 @@ def get_score(match_id):
     """
     fetch score xml and return the scores for corresponding match IDs
     """
-    for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
+    for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
         data = fetch_url(config.SCORE_URL.format(mode=mode))
         tree = ET.fromstring(data)
 
@@ -197,10 +199,11 @@ def get_stream_url(params):
         src = sources[0].get('src')
     else:
         for source in sources:
-            ext_ver = source.get('ext_x_version')
-            src = source.get('src')
-            if ext_ver == '4' and src:
-                if src.startswith('https'):
+            tmp = source.get('src')
+            if source.get('type') in ['application/vnd.apple.mpegurl',
+                                      'application/x-mpegURL']:
+                if tmp.startswith('https'):
+                    src = tmp
                     break
     if not src:
         utils.log(data.get('sources'))

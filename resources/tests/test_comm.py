@@ -52,20 +52,22 @@ class CommTests(testtools.TestCase):
 
     @responses.activate
     def test_list_matches_replays(self):
-        responses.add(responses.GET,
-                      config.TAGGEDLIST_REPLAY_URL,
-                      body=self.TAGGEDLIST_REPLAY_XML, status=200)
-        observed = comm.list_matches({'category': 'MatchReplays'})
-        self.assertEqual(50, len(observed))
-        self.assertEqual('6109144004001', observed[4].video_id)
+        for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
+            responses.add(responses.GET,
+                          config.TAGGEDLIST_REPLAY_URL.format(mode=mode),
+                          body=self.TAGGEDLIST_REPLAY_XML, status=200)
+        observed = comm.list_matches({'category': 'Match Replays'})
+        self.assertEqual(400, len(observed))  # 200 * 2
+        self.assertEqual('1647221321927449747', observed[4].video_id)
 
     @responses.activate
     def test_list_matches_highlights(self):
-        responses.add(responses.GET,
-                      config.TAGGEDLIST_PROGRAM_URL,
-                      body=self.TAGGEDLIST_HIGHLIGHTS_XML, status=200)
+        for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
+            responses.add(responses.GET,
+                          config.LONGLIST_URL.format(mode=mode),
+                          body=self.TAGGEDLIST_HIGHLIGHTS_XML, status=200)
         observed = comm.list_matches({'category': 'MatchHighlights'})
-        self.assertEqual(100, len(observed))
+        self.assertEqual(200, len(observed))  # 100 * 2
         self.assertEqual('1647215383533280406', observed[4].video_id)
 
     @responses.activate
@@ -81,9 +83,9 @@ class CommTests(testtools.TestCase):
 
     @responses.activate
     def test_get_index(self):
-        for mode in ['INTERNATIONAL', 'SUPER_NETBALL']:
+        for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
             responses.add(responses.GET,
-                          config.INDEX_URL.format(mode),
+                          config.INDEX_URL.format(mode=mode),
                           body=self.INDEX_XML, status=200)
         observed = comm.get_index()
         self.assertEqual(['107250301', '107250301'], observed)

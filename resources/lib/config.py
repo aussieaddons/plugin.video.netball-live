@@ -21,19 +21,16 @@ VIDEO_TOKEN_URL = 'https://signon-league-net.yinzcam.com/subscription/videotoken
 AUTH_URL = 'http://player.ooyala.com/sas/player_api/v2/authorization/embed_code/{0}/{1}?device=html5&domain=http%3A%2F%2Fwww.ooyala.com&embedToken={2}&supportedFormats=m3u8'
 
 # main url for xml that contains metadata for other non-live videos            
-LONGLIST_URL = 'https://app-league-net.yinzcam.com/V1/Media/LongList?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
+LONGLIST_URL = 'https://app-league-net.yinzcam.com/V1/Media/LongList?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&mode={mode}&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
 
 # xml for replay videos
-TAGGEDLIST_REPLAY_URL = 'https://app-league-net.yinzcam.com/V1/Media/TaggedList/card/matchreplays?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
-
-# needed??
-TAGGEDLIST_PROGRAM_URL = 'https://app-league-net.yinzcam.com/V1/media/taggedlist/programtype/MatchHighlights?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
+TAGGEDLIST_REPLAY_URL = 'https://app-league-net.yinzcam.com/V1/Media/TaggedList/card/matchreplays?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&mode={mode}&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
 
 # url for xml that contains match scores
 SCORE_URL = 'https://app-league-net.yinzcam.com/V1/Game/Scores/?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&mnc=0&ff=mobile&app_version=2.6.8&mode={mode}&version=5.7&width=1080&os_version=6.0.1&mcc=0&application=NET_LEAGUE'
 
 # index of android app homepage - has current round game id's
-INDEX_URL = 'http://app-league-net.yinzcam.com/V1/Home/Index?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&mode={0}&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
+INDEX_URL = 'http://app-league-net.yinzcam.com/V1/Home/Index?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&mode={mode}&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
 
 # Score and team names for upcoming games
 BOX_URL = 'http://app-league-net.yinzcam.com/V1/Game/Box/{0}?carrier=&height=1776&ycurl_version=1&os=Android&platform=Android&ff=mobile&mnc=0&app_version=2.6.8&version=5.7&width=1080&mcc=0&os_version=6.0.1&application=NET_LEAGUE'
@@ -44,10 +41,9 @@ LIVE_MEDIA_URL = 'http://app-league-net.yinzcam.com/V1/Media/Video/{0}?carrier=&
 BC_URL = 'https://edge.api.brightcove.com/playback/v1/accounts/{0}/videos/{1}'
 
 CATEGORIES = {'1 Live Matches': 'livematches',
-              '2 Full Match Replays': 'MatchReplays',
-              '3 Match Highlights': 'MatchHighlights',
-              '4 Features': 'Features',
-              '5 Settings': 'settings'}
+              '2 Full Match Replays': 'Match Replays',
+              '3 News and Other Videos': 'VOD',
+              '4 Settings': 'settings'}
 
 # New auth config for 2017
 

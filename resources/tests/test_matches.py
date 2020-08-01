@@ -43,13 +43,14 @@ class MenusTests(testtools.TestCase):
     def test_make_matches_list(self, mock_listitem):
         mock_listitem.side_effect = fakes.FakeListItem
         mock_plugin = fakes.FakePlugin()
-        responses.add(responses.GET,
-                      config.TAGGEDLIST_REPLAY_URL,
-                      body=self.TAGGEDLIST_REPLAY_XML, status=200)
+        for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
+            responses.add(responses.GET,
+                          config.TAGGEDLIST_REPLAY_URL.format(mode=mode),
+                          body=self.TAGGEDLIST_REPLAY_XML, status=200)
         with mock.patch.dict('sys.modules', xbmcplugin=mock_plugin):
             import resources.lib.matches as matches
-            matches.make_matches_list({'category': 'MatchReplays'})
-            expected_title = '2019 Round 11: Giants v Firebirds (Replay)'
+            matches.make_matches_list({'category': 'Match Replays'})
+            expected_title = '2019 Grand Final: Lightning v Swifts (Replay)'
             expected = fakes.FakeListItem(expected_title)
             expected.setArt({'icon': 'example.jpg',
                              'thumb': 'example.jpg'})
