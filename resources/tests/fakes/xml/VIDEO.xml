@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Video>
+  <Item Type="V" Featured="false">
+    <Id>LIVE_111080101</Id>
+    <Title>Firebirds v Lightning Live</Title>
+    <Description />
+    <Timestamp>2020-08-01T03:00:00Z</Timestamp>
+    <Video Type="B" Id="6112170884001" AccountId="6057994524001" PolicyKey="BCpkADawqM0iZ1kHqDZmhGgwf0SHhCi1smeoD8j7dqBuRKGB5dzhXBAPFe3Pfw5BPXW6FTSWBD9a_GCsbukIhk7e0r3P8Olh6-tXCsDgNFKVlZm6Ca2UJza8Tt5TkTrIhPZ4mJUEIxc2y96M" LiveDVREnabled="true" />
+    <MediaUrl />
+    <ImageUrl />
+    <FullImageUrl />
+    <Exclusive>true</Exclusive>
+    <LiveEvent>true</LiveEvent>
+    <LiveNow>true</LiveNow>
+    <EnableUrlSigning>true</EnableUrlSigning>
+    <ShowPromptBeforePlay>true</ShowPromptBeforePlay>
+    <DisableSecondScreen>true</DisableSecondScreen>
+    <FreePreview Enabled="false" Duration="0" />
+    <Metadata Type="CONVIVA">
+      <AssetName>Super Netball 2020, Firebirds vs Lightning, Round 1</AssetName>
+      <Data Key="contentType" Value="Live" />
+      <Data Key="season" Value="2020" />
+      <Data Key="round" Value="Round1" />
+      <Data Key="club" Value="Firebirds,Lightning" />
+      <Data Key="matchId" Value="111080101" />
+      <Data Key="competition" Value="Super Netball" />
+      <Data Key="product" Value="Netball" />
+      <Data Key="format" Value="SD" />
+    </Metadata>
+  </Item>
+  <YinzNode InVenue="false" VenueStatus="O" Ads="YC" InHomeMarket="O" Generated="8/1/2020 4:04:06 AM" />
+</Video>

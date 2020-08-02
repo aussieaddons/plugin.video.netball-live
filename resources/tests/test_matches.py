@@ -33,6 +33,9 @@ class MenusTests(testtools.TestCase):
         with open(os.path.join(cwd, 'fakes/xml/TAGGEDLIST_REPLAY.xml'),
                   'rb') as f:
             self.TAGGEDLIST_REPLAY_XML = io.BytesIO(f.read()).read()
+        with open(os.path.join(cwd, 'fakes/xml/VIDEO.xml'),
+                  'rb') as f:
+            self.VIDEO_XML = io.BytesIO(f.read()).read()
 
     @mock.patch('xbmcgui.ListItem')
     @mock.patch('sys.argv',
@@ -62,7 +65,6 @@ class MenusTests(testtools.TestCase):
                 self.assertEqual(getattr(expected, attrib),
                                  getattr(observed, attrib))
 
-    @testtools.skip('Need live video data to complete test')
     @mock.patch('xbmcgui.ListItem')
     @mock.patch('sys.argv',
                 ['plugin://plugin.video.soccer-live/', '2',
@@ -82,15 +84,19 @@ class MenusTests(testtools.TestCase):
                       config.BOX_URL.format('107250301'),
                       body=self.BOX_XML, status=200)
         responses.add(responses.GET,
-                      config.INDEX_URL,
-                      body=self.INDEX_XML, status=200)
+                      config.LIVE_MEDIA_URL.format('107250301'),
+                      body=self.VIDEO_XML, status=200)
+        for mode in ['SUPER_NETBALL', 'INTERNATIONAL']:
+            responses.add(responses.GET,
+                          config.INDEX_URL.format(mode=mode),
+                          body=self.INDEX_XML, status=200)
         with mock.patch.dict('sys.modules', xbmcplugin=mock_plugin):
             import resources.lib.matches as matches
             matches.make_matches_list({'category': 'livematches'})
-            expected_title = '2019 Round 11: Giants v Firebirds (Replay)'
+            expected_title = ('[COLOR green][LIVE NOW][/COLOR] Sunshine Coast '
+                              'Lightning v NSW Swifts [COLOR yellow]53 - '
+                              '46[/COLOR]')
             expected = fakes.FakeListItem(expected_title)
-            expected.setThumbnailImage('example.jpg')
-            expected.setIconImage('example.jpg')
             expected.setInfo('video', {'plot': expected_title,
                                        'plotoutline': expected_title})
             expected.setProperty('IsPlayable', 'true')

@@ -40,6 +40,10 @@ LIVE_MEDIA_URL = 'http://app-league-net.yinzcam.com/V1/Media/Video/{0}?carrier=&
 
 BC_URL = 'https://edge.api.brightcove.com/playback/v1/accounts/{0}/videos/{1}'
 
+MEDIA_AUTH_URL = 'https://signon-league-net.yinzcam.com/subscription/videotoken?application=NET_LEAGUE&video_id={video_id}'
+
+SIGN_URL = 'https://api.mediaservices.com.au/keyserver/urlSigning?url={0}'
+
 CATEGORIES = {'1 Live Matches': 'livematches',
               '2 Full Match Replays': 'Match Replays',
               '3 News and Other Videos': 'VOD',

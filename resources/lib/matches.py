@@ -48,4 +48,5 @@ def make_matches_list(params):
         xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
         xbmcplugin.endOfDirectory(_handle)
     except Exception:
+        raise
         utils.handle_error('Unable to display matches')

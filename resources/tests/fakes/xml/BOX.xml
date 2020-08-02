@@ -28,7 +28,7 @@
   </Score>
   <WatchButton>
     <Title>WATCH FOO LIVE</Title>
-    <URL>yc://feature/BRIGHTCOVE_VIDEO?mediaId=4156</URL>
+    <URL>yc://feature/BRIGHTCOVE_VIDEO?mediaId=107250301</URL>
     <Type>Default</Type>
   </WatchButton>
   <HeadlineButtons>
@@ -39,7 +39,7 @@
     </Button>
     <Button>
       <Title>WATCH REPLAY</Title>
-      <URL>yc://feature/BRIGHTCOVE_VIDEO?mediaId=4156</URL>
+      <URL>yc://feature/BRIGHTCOVE_VIDEO?mediaId=107250301</URL>
       <Type>Default</Type>
     </Button>
   </HeadlineButtons>

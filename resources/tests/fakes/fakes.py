@@ -50,7 +50,8 @@ class FakeListItem(xbmcgui.ListItem):
         for k, v in dictionary.items():
             if k not in allowed_keys:
                 raise Exception('Unallowed key for setArt')
-            self.art.update({k: v})
+            if v:
+                self.art.update({k: v})
 
     def setIsFolder(self, isFolder):
         assert type(isFolder) == bool

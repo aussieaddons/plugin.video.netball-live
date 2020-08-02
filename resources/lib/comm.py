@@ -3,6 +3,8 @@ import json
 import time
 import xml.etree.ElementTree as ET
 
+from future.moves.urllib.parse import quote_plus
+
 from aussieaddonscommon import session
 from aussieaddonscommon import utils
 
@@ -98,6 +100,8 @@ def list_live_matches():
         video_id = media_url[media_url.find('Id=')+3:]
         media_tree = get_media_tree(video_id)
         v.video_id = media_tree.find('Video').attrib['Id']
+        v.account_id = media_tree.find('Video').attrib['AccountId']
+        v.policy_key = media_tree.find('Video').attrib['PolicyKey']
         v.live = 'true'
         listing.append(v)
     return listing
@@ -188,7 +192,7 @@ def get_score(match_id):
                         home_score, away_score)
 
 
-def get_stream_url(params):
+def get_stream_url(params, media_auth_token):
     bc_url = config.BC_URL.format(params.get('account_id'),
                                   params.get('video_id'))
     data = json.loads(
@@ -208,4 +212,18 @@ def get_stream_url(params):
     if not src:
         utils.log(data.get('sources'))
         raise Exception('Unable to locate video source.')
+    if not media_auth_token:
+        return str(src)
+    else:
+        src = sign_url(src, media_auth_token)
     return str(src)
+
+
+def sign_url(url, media_auth_token):
+    headers = {'authorization': 'JWT {0}'.format(media_auth_token)}
+    data = json.loads(
+        fetch_url(config.SIGN_URL.format(quote_plus(url)), headers=headers))
+    if data.get('message') == 'SUCCESS':
+        return str(data.get('url'))
+    else:
+        raise Exception('error in signing url')

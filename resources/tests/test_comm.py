@@ -125,6 +125,6 @@ class CommTests(testtools.TestCase):
                       body=self.BC_EDGE_JSON, status=200)
         observed = comm.get_stream_url({'account_id': '123',
                                         'video_id': '456',
-                                        'policy_key': '789'})
+                                        'policy_key': '789'}, None)
         expected = 'https://foo.bar/video.m3u8'
         self.assertEqual(expected, observed)
