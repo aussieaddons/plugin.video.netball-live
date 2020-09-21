@@ -35,5 +35,4 @@ def play_video(params):
         listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
         xbmcplugin.setResolvedUrl(_handle, True, listitem=listitem)
     except Exception:
-        raise
         utils.handle_error('Unable to play video')
