@@ -37,7 +37,8 @@ def make_matches_list(params):
             upcoming = comm.get_upcoming()
             for event in upcoming:
                 thumb = os.path.join(addon_path, 'resources', 'soon.jpg')
-                li = xbmcgui.ListItem(event.title, iconImage=thumb)
+                li = xbmcgui.ListItem(event.title)
+                li.setArt({'icon': thumb, 'thumb': thumb})
                 url = '{0}?action=listmatches{1}'.format(_url,
                                                          event.make_kodi_url())
                 is_folder = False
@@ -48,5 +49,4 @@ def make_matches_list(params):
         xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
         xbmcplugin.endOfDirectory(_handle)
     except Exception:
-        raise
         utils.handle_error('Unable to display matches')
