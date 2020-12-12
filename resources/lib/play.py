@@ -32,6 +32,7 @@ def play_video(params):
         playlist = comm.get_stream_url(params, media_auth_token)
         listitem = xbmcgui.ListItem(path=playlist)
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        listitem.setProperty('inputstream', 'inputstream.adaptive')
         listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
         xbmcplugin.setResolvedUrl(_handle, True, listitem=listitem)
     except Exception:
