@@ -6,6 +6,8 @@ from collections import OrderedDict
 
 from future.moves.urllib.parse import parse_qsl, quote_plus, unquote_plus
 
+from aussieaddonscommon import utils
+
 
 class Video(object):
     """
@@ -24,6 +26,7 @@ class Video(object):
         self.start_date = None
         self.home = None
         self.away = None
+        self.date = None
 
     def make_kodi_url(self):
         d_original = OrderedDict(
@@ -43,10 +46,12 @@ class Video(object):
             else:
                 val = d[key]
             url += '&{0}={1}'.format(key, val)
+        url += '&addon_version={0}'.format(utils.get_addon_version())
         return url
 
     def parse_kodi_url(self, url):
         params = dict(parse_qsl(url))
+        params.pop('addon_version', '')
         self.parse_params(params)
 
     def parse_params(self, params):

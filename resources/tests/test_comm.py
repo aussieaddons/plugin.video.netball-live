@@ -58,7 +58,7 @@ class CommTests(testtools.TestCase):
                           body=self.TAGGEDLIST_REPLAY_XML, status=200)
         observed = comm.list_matches({'category': 'Match Replays'})
         self.assertEqual(400, len(observed))  # 200 * 2
-        self.assertEqual('1647221321927449747', observed[4].video_id)
+        self.assertEqual('1647221321927449747', observed[8].video_id)
 
     @responses.activate
     def test_list_matches_highlights(self):
@@ -68,7 +68,7 @@ class CommTests(testtools.TestCase):
                           body=self.TAGGEDLIST_HIGHLIGHTS_XML, status=200)
         observed = comm.list_matches({'category': 'MatchHighlights'})
         self.assertEqual(200, len(observed))  # 100 * 2
-        self.assertEqual('1647215383533280406', observed[4].video_id)
+        self.assertEqual('1647215383533280406', observed[8].video_id)
 
     @responses.activate
     def test_get_score(self):

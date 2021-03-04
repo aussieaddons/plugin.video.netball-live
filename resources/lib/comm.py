@@ -78,7 +78,9 @@ def list_matches(params):
                 v.live = gm.find('LiveNow').text
                 v.thumb = gm.find('FullImageUrl').text
                 v.time = utils.ensure_ascii(gm.find('Date').text)
+                v.date = gm.find('Timestamp').text
                 listing.append(v)
+    listing = sorted(listing, key=lambda x: x.date, reverse=True)
     return listing
 
 
