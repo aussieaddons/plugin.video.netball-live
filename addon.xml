@@ -12,6 +12,10 @@
     <provides>video</provides>
   </extension>
   <extension library="default.py" point="xbmc.addon.metadata">
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+    </assets>
     <summary>Netball Live add-on</summary>
     <description>Netball Live allows you to use you Free Telstra Live Pass to stream live matches, match replays, and other videos offered by this service. Note: this add-on is not compatible with passes obtained via in-app purchase.</description>
     <provides>video</provides>

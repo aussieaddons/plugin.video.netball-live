@@ -108,10 +108,25 @@ class TelstraAuth(object):
         except AttributeError as e:
             raise e
 
+    def send_username(self):
+        myid_auth_resume_data = {
+            'orgName': self.username,
+            'subject': self.username,
+            '$ok': 'clicked',
+            '$adapterIdField': '$adapterId',
+            'client_id': self.sso_client_id}
+        self.session.post(
+            config.MYID_RESUME_AUTHORIZATION_URL.format(
+                self.identify_path_token),
+            data=myid_auth_resume_data)
+
     def set_myid_auth_resume_resp_text(self):
         myid_auth_resume_data = dict(config.MYID_AUTH_RESUME_DATA)
         myid_auth_resume_data.update(
-            {'pf.username': self.username, 'pf.pass': self.password})
+            {'pf.username': self.username,
+             'pf.pass': self.password,
+             'pf.adapterId': 'upAdapter',
+             'client_id': self.sso_client_id})
         myid_auth_resume = self.session.post(
             config.MYID_RESUME_AUTHORIZATION_URL.format(
                 self.identify_path_token),
@@ -286,6 +301,7 @@ class TelstraAuth(object):
         self.prog_dialog.update(40,
                                 'Signing in with Telstra ID username/password')
         self.set_identity_path_token()
+        self.send_username()
         self.set_myid_auth_resume_resp_text()
         self.validate_myid_auth()
         self.signon_to_sso_sessions()
